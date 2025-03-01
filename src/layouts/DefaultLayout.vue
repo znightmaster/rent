@@ -1,7 +1,7 @@
 
 <template>
   <div class="flex flex-col">
-    <main-header/>
+    <main-header />
     <router-view/>
     <main-footer/>
   </div>
