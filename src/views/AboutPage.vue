@@ -1,6 +1,6 @@
 <template>
   <div>
-    About
+    ABOUT US
   </div>
 </template>
 

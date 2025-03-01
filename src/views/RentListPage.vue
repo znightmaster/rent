@@ -1,6 +1,6 @@
 <template>
   <div>
-    Rent-list
+    RENT LIST
   </div>
 </template>
 

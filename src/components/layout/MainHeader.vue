@@ -4,11 +4,10 @@
       <img src="../../assets/Logo.png" alt="logo" class="h-9" />
     </a>
     <div class="flex items-center gap-60 w-704 h-9 font-300 text-sm">
-      <Home />
-      <div>PROPERTIES</div>
-      <div>AGENTS</div>
-      <div>BLOG</div>
-      <div class="border-2 rounded-16 p-2 border-sky-400 text-sky-400">LOG IN</div>
+      <MainPage />
+      <AboutPage />
+      <RentListPage />
+      <LogIn />
     </div>
 
 
@@ -20,7 +19,10 @@
 </template>
 
 <script setup>
-import Home from "@/components/Home.vue"
+import MainPage from '@/views/MainPage.vue';
+import AboutPage from '@/views/AboutPage.vue';
+import RentListPage from '@/views/RentListPage.vue';
+import LogIn from '@/views/LogIn.vue';
 
 </script>
 
