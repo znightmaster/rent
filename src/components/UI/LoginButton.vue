@@ -1,5 +1,5 @@
 <template>
-  <div class="border-2 rounded-16 p-2 border-sky-400 text-sky-400">
+  <div class="border-2 rounded-16 p-2 border-blue-900 text-blue-900">
     LOG IN
   </div>
 </template>

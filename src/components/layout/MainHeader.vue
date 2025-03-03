@@ -4,7 +4,7 @@
       <img src="../../assets/Logo.png" alt="logo" class="h-100" />
     </router-link>
 
-    <div class="flex items-center gap-60 w-704 h-9 font-300 text-sm">
+    <div class="flex items-center gap-60 w-704 font-400 text-xl">
 
       <router-link to="/about">
         О нас

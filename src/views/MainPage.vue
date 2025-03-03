@@ -22,8 +22,17 @@
       <ReservationBar />
 
     </div>
-
-
+    <div>
+      <div class="relative top-0
+    min-h-screen
+    h-full
+    w-full
+    bg-contain
+    bg-no-repeat
+    rounded-16
+    bg-[url('@/assets/Banner2.jpg')]">
+      </div>
+  </div>
   </div>
 </template>
 

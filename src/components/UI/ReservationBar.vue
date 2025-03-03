@@ -21,7 +21,7 @@
         </select>
       </div>
 
-      <button class="bg-blue-950 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
+      <button class="bg-blue-950 text-white px-6 py-2 rounded-md hover:bg-blue-900 transition">
         Поиск
       </button>
     </div>
