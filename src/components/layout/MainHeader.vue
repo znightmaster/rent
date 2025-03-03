@@ -1,7 +1,7 @@
 <template>
-  <div class="sticky top-0 z-20 flex justify-between items-center p-20">
+  <div class="sticky top-0 z-20 flex justify-between items-center p-20 ml-10 mr-10">
     <router-link to="/">
-      <img src="../../assets/Logo.png" alt="logo" class="h-9" />
+      <img src="../../assets/Logo.png" alt="logo" class="h-100" />
     </router-link>
 
     <div class="flex items-center gap-60 w-704 h-9 font-300 text-sm">

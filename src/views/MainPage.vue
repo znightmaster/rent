@@ -1,45 +1,35 @@
 <template>
-  <div class="p-20 flex flex-col">
-    <div class="
-    relative
-    h-auto
-    min-h-[635px]
+  <div class="p-20 ">
+    <div class="relative top-0
+    min-h-screen
+    h-full
     w-full
     bg-contain
-    bg-center
     bg-no-repeat
     rounded-16
     bg-[url('@/assets/Banner.png')]">
-      <div class="flex flex-col w-full">
-        Easy way to find a
-        perfect property
-      </div>
-      <div class="flex flex-col w-full">
-        We provide a complete service for sale,
-        purchase or rental of real estate.
-      </div>
-    </div>
-    <div>
-      <div>
-        <div>
-
+      <div class="relative w-490 h-257 top-60 left-32">
+        <div class="flex text-[5vw] ">
+          Easy way to find a<br>
+          perfect property
         </div>
-        <div>
-
+        <div class="flex text-[2vw] mt-10">
+          We provide a complete service for sale,<br>
+          purchase or rental of real estate.
         </div>
-        <div>
 
-        </div>
       </div>
-<!--      <img src="@/assets/Banner.png" alt="" class="p-20 w-full">-->
+      <ReservationBar />
 
     </div>
+
 
   </div>
 </template>
 
 <script setup>
 
+import ReservationBar from '@/components/UI/ReservationBar.vue';
 </script>
 
 <style lang="scss" scoped>
