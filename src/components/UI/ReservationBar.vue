@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex justify-center top-112  ">
+  <div class="relative flex justify-center top-200  ">
     <div class="relative flex items-center justify-between w-[918px] h-[102px] bg-white/30 backdrop-blur-md rounded-lg p-4 space-x-4">
       <div class="flex flex-col">
         <label for="check-in" class="text-gray-700 font-medium">Заезд</label>
