@@ -1,4 +1,5 @@
 import AboutPage from '@/views/AboutPage.vue';
+import ApartmentPage from '@/views/ApartmentPage.vue';
 import ContactPage from '@/views/ContactPage.vue';
 import LoginPage from '@/views/LoginPage.vue';
 import MainPage from '@/views/MainPage.vue';
@@ -38,7 +39,12 @@ const router = createRouter({
       path: '/log-in',
       name: 'log-in',
       component: LoginPage,
-    }
+    },
+    {
+      path: '/apartment',
+      name: 'apartment',
+      component: ApartmentPage,
+    },
   ],
 });
 

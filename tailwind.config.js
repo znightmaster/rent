@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        mb: { max: '450px' },
+        sm: { max: '991px' },
+        lg: { min: '992px' },
+      },
       spacing: {
         0: '0',
         4: '4px',
@@ -112,7 +117,6 @@ export default {
         130: '1.3',
         140: '1.4',
         150: '1.5',
-
       },
     },
   },

@@ -9,10 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vuepic/vue-datepicker": "^11.0.1",
     "axios": "^1.8.1",
     "pinia": "^3.0.1",
+    "swiper": "^11.2.5",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "vue-tailwind-datepicker": "^1.7.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",

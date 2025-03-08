@@ -1,12 +1,12 @@
 <template>
-
-    <ApartmentCard />
+  <ReservationBar class="mx-auto"/>
+  <ApartmentCard/>
 
 </template>
 
 <script setup>
-import ApartmentCard from "@/components/UI/ApartmentCard.vue";
-
+import ApartmentCard from '@/components/UI/ApartmentCard.vue';
+import ReservationBar from '@/components/UI/ReservationBar.vue';
 
 </script>
 
