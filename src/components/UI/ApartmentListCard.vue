@@ -21,9 +21,11 @@
       </div>
 
       <div class="flex gap-4">
-        <button @click="" class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg">
-          Подробнее
-        </button>
+        <router-link to="/apartment">
+          <button  class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg">
+            Подробнее
+          </button>
+        </router-link>
         <button
           @click="emit('chlen', img)"
           class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded-lg">

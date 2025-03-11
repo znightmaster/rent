@@ -2,7 +2,10 @@
   <div class="grid grid-cols-2 sm:grid-cols-1 p-20 gap-20">
     <image-preview-picker :list="imageList"/>
     <div class="flex flex-col w-full gap-20">
-      <div class="flex flex-col gap-20 py-40 px-80 bg-black">
+      <div class="flex flex-col gap-20 py-40 px-80 bg-gray-300 rounded-8">
+        <router-link to="">
+
+        </router-link>
         <apartment-button>Забронировать номер</apartment-button>
         <apartment-button>Смотреть видео</apartment-button>
       </div>
