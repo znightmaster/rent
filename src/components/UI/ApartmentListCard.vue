@@ -21,7 +21,7 @@
       </div>
 
       <div class="flex gap-4">
-        <button class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg">
+        <button @click="" class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg">
           Подробнее
         </button>
         <button
@@ -38,7 +38,7 @@
 
 const emit = defineEmits(['chlen']);
 
-const props = defineProps({
+defineProps({
   img: {
     type: String,
     required: true,

@@ -17,7 +17,7 @@
 import VueDatePicker from '@vuepic/vue-datepicker';
 import { ref } from 'vue';
 
-const props = defineProps({
+defineProps({
   label: {
     type: String,
     required: false,

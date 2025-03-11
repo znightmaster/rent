@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-2 sm:grid-cols-1 p-20 gap-20">
-    <imega-preview-picker :list="imageList"/>
+    <image-preview-picker :list="imageList"/>
     <div class="flex flex-col w-full gap-20">
       <div class="flex flex-col gap-20 py-40 px-80 bg-black">
         <apartment-button>Забронировать номер</apartment-button>
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import ImegaPreviewPicker from '@/components/UI/ImegaPreviewPicker.vue';
+import ImagePreviewPicker from '@/components/UI/ImagePreviewPicker.vue';
 import ApartmentButton from '@/components/UI/ApartmentButton.vue';
 
 const imageList = [

@@ -4,7 +4,7 @@
       <img
         :key="current"
         :src="current"
-        class="aspect-square w-full object-cover object-center"/>
+        class="aspect-square w-full object-cover object-center" alt=""/>
     </transition>
 
     <div class="flex gap-20 h-100 w-fit absolute -bottom-48">
@@ -13,7 +13,7 @@
         class="aspect-square h-full object-cover object-center cursor-pointer"
         :key="img"
         :src="img"
-        @click="current = img">
+        @click="current = img" alt="">
 
     </div>
   </div>

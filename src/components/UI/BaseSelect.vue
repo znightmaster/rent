@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col gap-1">
     <label for="guests" class="text-gray-700 font-medium">{{ label }}</label>
     <select
       v-model="model"
