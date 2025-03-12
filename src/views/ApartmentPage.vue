@@ -22,7 +22,6 @@
     </div>
   </div>
 
-  <!-- Модальное окно -->
   <apartment-modal v-model="modal"/>
 </template>
 
