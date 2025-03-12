@@ -3,7 +3,7 @@
 
     <div class="w-1/3 h-full">
       <img
-        :src="`/src/assets/${img}`"
+        :src="img"
         alt="photo"
         class="w-full h-full object-cover"
       />
@@ -22,7 +22,7 @@
 
       <div class="flex gap-4">
         <router-link to="/apartment">
-          <button  class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg">
+          <button class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg">
             Подробнее
           </button>
         </router-link>
@@ -40,7 +40,7 @@
 
 const emit = defineEmits(['chlen']);
 
-defineProps({
+const props = defineProps({
   img: {
     type: String,
     required: true,

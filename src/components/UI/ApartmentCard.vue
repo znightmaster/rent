@@ -16,7 +16,7 @@ import ApartmentListCard from '@/components/UI/ApartmentListCard.vue';
 import { ref } from 'vue';
 import ApartmentModal from '@/components/UI/ApartmentModal.vue';
 
-const apartmentList = ['Banner8.png', 'Banner9.png', 'Banner10.png', 'Banner11.png', 'Banner12.png'];
+const apartmentList = ['/img/Banner8.png', '/img/Banner9.png', '/img/Banner10.png', '/img/Banner11.png', '/img/Banner12.png'];
 
 const modal = ref(null);
 

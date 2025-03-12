@@ -6,7 +6,7 @@
     <div class="flex flex-col w-[600px] h-fit bg-white p-12 rounded-12 gap-3" @click.stop>
       <p class="font-500">Бронирование</p>
       <div class="flex gap-20">
-        <img :src="`/src/assets/${isShow}`" class="aspect-square w-100 object-cover object-center" alt=""/>
+        <img :src="isShow" class="aspect-square w-100 object-cover object-center" alt=""/>
         <div class="flex flex-col gap-4 justify-between min-h-full">
           <p>г. Павлодар, Ломова 177</p>
           <p>Комнат: 3</p>

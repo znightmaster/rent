@@ -32,9 +32,9 @@ import ApartmentButton from '@/components/UI/ApartmentButton.vue';
 import ApartmentModal from '@/components/UI/ApartmentModal.vue';
 
 const imageList = [
-  'src/assets/Banner8.png',
-  'src/assets/Banner10.png',
-  'src/assets/Banner9.png',
+  '/img/Banner8.png',
+  '/img/Banner10.png',
+  '/img/Banner10.png',
 ];
 
 const textList = [
@@ -47,7 +47,7 @@ const textList = [
 const modal = ref(false);
 
 const openModal = () => {
-  modal.value = true;
+  modal.value = imageList[0];
 };
 </script>
 

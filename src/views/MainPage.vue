@@ -16,7 +16,7 @@
         <ReservationBar/>
       </div>
     </div>
-    <Slider class="top-5"/>
+    <Slider class="relative top-10"/>
     <div>
       <div
         class="relative top-10 min-h-screen h-full w-full bg-cover bg-no-repeat rounded-16 bg-[url('@/assets/Banner9.png')]">
