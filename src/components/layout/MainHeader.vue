@@ -9,14 +9,8 @@
       <router-link to="/about">
         О нас
       </router-link>
-      <router-link to="/apartment">
-        Шаблон
-      </router-link>
       <router-link to="/rent-list">
         Апартаменты
-      </router-link>
-      <router-link to="/log-in" class="">
-        <login-button/>
       </router-link>
     </div>
 
@@ -26,7 +20,6 @@
 
 <script setup>
 
-import LoginButton from '@/components/UI/LoginButton.vue';
 </script>
 
 <style lang="scss" scoped>

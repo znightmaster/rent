@@ -4,13 +4,13 @@
       <img
         :key="current"
         :src="current"
-        class="aspect-square w-full object-cover object-center" alt=""/>
+        class="aspect-square w-full object-cover object-center rounded-4" alt=""/>
     </transition>
 
     <div class="flex gap-20 h-100 w-fit absolute -bottom-48">
       <img
         v-for="img in list"
-        class="aspect-square h-full object-cover object-center cursor-pointer"
+        class="aspect-square h-full object-cover object-center cursor-pointer rounded-4"
         :key="img"
         :src="img"
         @click="current = img" alt="">
