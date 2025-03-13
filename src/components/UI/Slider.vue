@@ -4,9 +4,9 @@
     :slides-per-view="1"
     :navigation="true"
     :pagination="{ clickable: true }"
-    class="w-full h-fit"
+
   >
-    <swiper-slide v-for="(item, index) in slides" :key="index" class="flex">
+    <swiper-slide v-for="(item, index) in slides" :key="index" >
       <!--      <div class="grid grid-cols-2 sm:grid-cols-1 h-full border rounded-2xl shadow-lg overflow-hidden">-->
       <!--        <div class="w-full h-full">-->
       <!--          <img :src= alt="Фото" class="w-full h-full object-cover"/>-->
@@ -22,7 +22,7 @@
       <!--        </div>-->
       <!--      </div>-->
 
-      <apartment-list-card :img="item.image">
+      <apartment-list-card :img="item.image" class="justify-self-center flex top-5">
 
       </apartment-list-card>
 
