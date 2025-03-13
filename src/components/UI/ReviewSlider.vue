@@ -42,7 +42,6 @@ const reviews = [
 </script>
 
 <style scoped>
-/* Стилизация пагинации Swiper */
 .swiper-pagination-bullet {
   background-color: #0d9488 !important; /* teal-600 */
 }
