@@ -1,7 +1,6 @@
 <template>
   <ReservationBar class="mx-auto"/>
   <ApartmentCard/>
-
 </template>
 
 <script setup>
