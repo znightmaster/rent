@@ -1,16 +1,12 @@
 <template>
   <div>
-    <a
-      href="https://wa.me/77059870117"
-      target="_blank"
-      class="fixed z-100000 bottom-6 right-6 transition duration-300"
-    >
-      <img src="/whatsapp.png" alt=""/>
-    </a>
+    <Whatsapp class="fixed bottom-6 right-6"/>
   </div>
+
 </template>
 
 <script setup>
+import Whatsapp from '@/components/Icons/whatsapp.vue';
 
 </script>
 

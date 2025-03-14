@@ -11,6 +11,10 @@ export default {
         sm: { max: '991px' },
         lg: { min: '992px' },
       },
+      fontFamily: {
+        rubik: ["Rubik", "sans-serif"],
+        alegreya: ["Alegreya", "serif"]
+      },
       spacing: {
         0: '0',
         4: '4px',

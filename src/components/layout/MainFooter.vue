@@ -1,7 +1,7 @@
 <template>
-  <div class="flex gap-200 justify-center p-20  ">
+  <div class="flex gap-100 justify-center p-68">
     <router-link to="/">
-      <img src="../../assets/Logo.png" alt="logo" class="h-100 ml-20"/>
+      <goodHome />
     </router-link>
     <div class="flex flex-col gap-2">
       <router-link to="/about">
@@ -13,9 +13,21 @@
     </div>
     <div class="flex flex-col gap-2">
       <p>Контакты</p>
-      <p>Tel: +7 705 987 01 17</p>
-      <p>Email: Dauzer666@gmail.com</p>
-      <p></p>
+      <label for="" class="flex">
+        <img src="/telephone.png" alt="">
+        <a href="">: +7 705 987 01 17</a>
+      </label>
+      <label for="" class="flex">
+        <img src="/mail.png" alt="">
+        <a href="">: dauzer666@gmail.com</a>
+      </label>
+
+    </div>
+    <div class="flex gap-6 items-center">
+      <instagram />
+      <whatsapp />
+      <booking />
+
     </div>
 
   </div>
@@ -23,6 +35,10 @@
 
 <script setup>
 
+import Instagram from '@/components/Icons/instagram.vue';
+import Whatsapp from '@/components/Icons/whatsapp.vue';
+import Booking from '@/components/Icons/booking.vue';
+import GoodHome from '@/components/Icons/goodHome.vue';
 </script>
 
 <style lang="scss" scoped>
