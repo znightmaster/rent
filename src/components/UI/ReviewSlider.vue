@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-xl p-8 bg-white rounded-xl shadow-lg">
+  <div class="w-1/2 p-8 bg-white rounded-xl shadow-lg">
     <h2 class="text-3xl font-bold text-center text-teal-600 mb-6">
       Отзывы наших клиентов
     </h2>
@@ -10,7 +10,7 @@
       :pagination="{ clickable: true }"
       :loop="true"
       :autoplay="{ delay: 4000 }"
-      class="w-full"
+      class="w-full min-h-[200px]"
     >
       <SwiperSlide v-for="(review, index) in reviews" :key="index">
         <div class="p-6 bg-teal-600 text-white rounded-lg shadow-md">
@@ -30,7 +30,7 @@ import "swiper/css/pagination";
 
 // Данные с отзывами
 const reviews = [
-  { text: "Прекрасное место! Чистота, уют и дружелюбный персонал.", author: "Анастасия К." },
+  { text: "Прекрасное место! Чистота, уют и дружелюбный персонал.Прекрасное место! Чистота, уют и дружелюбный персонал.Прекрасное место! Чистота, уют и дружелюбный персонал.", author: "Анастасия К." },
   { text: "Очень уютные апартаменты, все новое и чистое!", author: "Дмитрий П." },
   { text: "Лучший сервис, который я встречал. Всё на высшем уровне!", author: "Елена С." },
   { text: "Останавливались на выходные, понравилось абсолютно всё!", author: "Максим В." },

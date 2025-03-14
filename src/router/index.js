@@ -46,6 +46,9 @@ const router = createRouter({
       component: ApartmentPage,
     },
   ],
+  scrollBehavior() {
+    return { top: 0, behavior: "smooth" }; // Плавная прокрутка при переходе
+  }
 });
 
 export default router;
