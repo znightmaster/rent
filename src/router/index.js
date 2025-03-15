@@ -1,7 +1,6 @@
 import AboutPage from '@/views/AboutPage.vue';
 import ApartmentPage from '@/views/ApartmentPage.vue';
 import ContactPage from '@/views/ContactPage.vue';
-import LoginPage from '@/views/LoginPage.vue';
 import MainPage from '@/views/MainPage.vue';
 import RentListPage from '@/views/RentListPage.vue';
 import RentObjectPage from '@/views/RentObjectPage.vue';
@@ -36,19 +35,14 @@ const router = createRouter({
       component: ContactPage,
     },
     {
-      path: '/log-in',
-      name: 'log-in',
-      component: LoginPage,
-    },
-    {
       path: '/apartment',
       name: 'apartment',
       component: ApartmentPage,
     },
   ],
   scrollBehavior() {
-    return { top: 0, behavior: "smooth" }; // Плавная прокрутка при переходе
-  }
+    return { top: 0, behavior: 'smooth' };
+  },
 });
 
 export default router;
