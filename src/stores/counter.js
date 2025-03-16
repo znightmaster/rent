@@ -1,12 +1,17 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
+import axios from 'axios';
+import { ref, computed } from 'vue';
+import { defineStore } from 'pinia';
 
-export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
-  }
+export const useMainStore = defineStore('main', () => {
+  const apartment = ref(null);
 
-  return { count, doubleCount, increment }
-})
+  const getApartment = async () => {
+    const { data } = await axios.get('https://api.jsonbin.io/v3/b/67d693da8561e97a50ecf9fc');
+    console.log(data.record);
+
+    apartment.value = data.record;
+
+  };
+
+  return { apartment, getApartment };
+});

@@ -1,8 +1,9 @@
-
 <template>
-  <div class="flex flex-col">
-    <main-header />
-    <router-view/>
+  <div class="flex flex-col min-h-screen">
+    <main-header/>
+    <main class="flex flex-col flex-grow">
+      <router-view/>
+    </main>
     <main-footer/>
   </div>
 </template>

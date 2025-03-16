@@ -1,9 +1,13 @@
 <template>
   <div class="sticky top-0 z-20 flex justify-between items-center p-2  bg-white/30 backdrop-blur-md">
     <router-link to="/">
-      <good-home
+      <img
+        src="../../assets/Logo.png"
+        alt="logo"
+        class="ml-20 transition-all duration-500 hover:scale-110"
         :class="logoSize"
-        class="transition-all duration-300"/>
+      />
+
     </router-link>
 
     <div class="flex items-center gap-40 w-704 font-400 text-xl mr-20">
@@ -26,13 +30,12 @@
 
 import Whatsapp from '@/components/Icons/whatsapp.vue';
 import Instagram from '@/components/Icons/instagram.vue';
-import GoodHome from '@/components/Icons/goodHome.vue';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 
 const isScrolled = ref(false);
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50; // Если скролл больше 50px, уменьшаем логотип
+  isScrolled.value = window.scrollY > 50;
 };
 
 onMounted(() => {

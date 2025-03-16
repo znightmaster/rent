@@ -10,18 +10,22 @@
     </div>
 
     <div class="w-2/3 p-6 flex flex-col justify-between">
-      <div>
-        <h2 class="text-2xl font-bold">Квартира</h2>
-        <p class="text-gray-600 mt-2">
-          Квартира оснащена абсолютно всем необходимым для комфортного проживания вдали от дома: → Свежее,
-          качественное, выглаженное постельное белье и полотенца; → Одноразовые тапочки и зубные наборы; → Большой
-          SMART-TV с выходом в интернет; → Новый дизайнерский ремонт в современном стиле; → Большая, удобная кровать
-        </p>
-        <p class="text-xl font-semibold text-teal-600 mt-4">20 000 KZt</p>
+      <div class="flex flex-col gap-20">
+        <h2 class="text-2xl font-bold">{{ data.title }}</h2>
+        <p class="text-gray-600 mt-2">{{ data.description }}</p>
+        <div class="flex gap-12">
+          <p
+            v-for="item in data.amenities"
+            :key="item">
+            {{ item }}
+          </p>
+        </div>
+        <p class="text-xl font-semibold text-teal-600 mt-4">{{ data.price }} KZT</p>
+
       </div>
 
       <div class="flex gap-4">
-        <router-link to="/apartment">
+        <router-link :to="`/apartment/${data.id}`">
           <button class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg">
             Подробнее
           </button>
@@ -43,6 +47,10 @@ const emit = defineEmits(['chlen']);
 const props = defineProps({
   img: {
     type: String,
+    required: true,
+  },
+  data: {
+    type: Object,
     required: true,
   },
 });

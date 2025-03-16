@@ -4,16 +4,13 @@ export default {
     './index.html',
     './src/**/*.{vue,js,ts,jsx,tsx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       screens: {
         mb: { max: '450px' },
         sm: { max: '991px' },
         lg: { min: '992px' },
-      },
-      fontFamily: {
-        rubik: ["Rubik", "sans-serif"],
-        alegreya: ["Alegreya", "serif"]
       },
       spacing: {
         0: '0',

@@ -1,7 +1,8 @@
 <template>
   <div class="flex gap-100 justify-center p-68">
     <router-link to="/">
-      <goodHome />
+      <img src="../../assets/Logo.png" alt="logo"
+           class="h-100 ml-20 transition-transform duration-500 ease-in-out hover:scale-110"/>
     </router-link>
     <div class="flex flex-col gap-2">
       <router-link to="/about">
@@ -24,9 +25,9 @@
 
     </div>
     <div class="flex gap-6 items-center">
-      <instagram />
-      <whatsapp />
-      <booking />
+      <instagram/>
+      <whatsapp/>
+      <booking/>
 
     </div>
 

@@ -6,7 +6,7 @@
     :pagination="{ clickable: true }"
 
   >
-    <swiper-slide v-for="(item, index) in slides" :key="index" >
+    <swiper-slide v-for="(item, index) in store.apartment" :key="index">
       <!--      <div class="grid grid-cols-2 sm:grid-cols-1 h-full border rounded-2xl shadow-lg overflow-hidden">-->
       <!--        <div class="w-full h-full">-->
       <!--          <img :src= alt="Фото" class="w-full h-full object-cover"/>-->
@@ -22,7 +22,7 @@
       <!--        </div>-->
       <!--      </div>-->
 
-      <apartment-list-card :img="item.image" class="justify-self-center flex top-5">
+      <apartment-list-card img="/img/Banner8.png" class="justify-self-center flex top-5" :data="item">
 
       </apartment-list-card>
 
@@ -73,11 +73,14 @@ import 'swiper/css/pagination';
 import ApartmentModal from '@/components/UI/ApartmentModal.vue';
 import { ref } from 'vue';
 import ApartmentListCard from '@/components/UI/ApartmentListCard.vue';
+import { useMainStore } from '@/stores/counter.js';
 
 export default {
   components: { ApartmentListCard, ApartmentModal, Swiper, SwiperSlide },
   setup() {
     const modal = ref(false);
+
+    const store = useMainStore();
 
     const openModal = () => {
       modal.value = true;
@@ -104,7 +107,7 @@ export default {
       },
     ];
 
-    return { slides, modal, openModal, Navigation, Pagination };
+    return { slides, modal, openModal, Navigation, Pagination, store };
   },
 };
 </script>

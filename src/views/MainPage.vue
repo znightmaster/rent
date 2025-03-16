@@ -18,7 +18,7 @@
     </div>
 
     <div class="mt-40">
-      <Slider/>
+      <Slider v-if="store.apartment"/>
     </div>
 
     <div class="flex items-center gap-5 px-4 py-10">
@@ -38,6 +38,13 @@
 import ReservationBar from '@/components/UI/ReservationBar.vue';
 import Slider from '@/components/UI/Slider.vue';
 import ReviewSlider from '@/components/UI/ReviewSlider.vue';
+import { onMounted } from 'vue';
+import { useMainStore } from '@/stores/counter.js';
+
+const store = useMainStore();
+onMounted(() => {
+  !store.apartment && store.getApartment();
+});
 </script>
 
 <style lang="scss" scoped>
