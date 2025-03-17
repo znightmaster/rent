@@ -48,7 +48,7 @@ const currentApartment = computed(() => {
 const imageList = [
   '/img/Banner8.png',
   '/img/Banner10.png',
-  '/img/Banner10.png',
+  '/img/Banner11.png',
 ];
 
 const textList = [

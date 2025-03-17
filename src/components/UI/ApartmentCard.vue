@@ -8,7 +8,9 @@
       img="/img/Banner8.png"
       @chlen="openModal"/>
 
-    <apartment-modal v-model="modal"/>
+    <apartment-modal
+
+      v-model="modal"/>
   </div>
 </template>
 

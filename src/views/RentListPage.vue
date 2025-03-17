@@ -1,5 +1,5 @@
 <template>
-  <ReservationBar class="mx-auto"/>
+  <ReservationBar class="mx-auto z-10"/>
   <DoubleRangeSlider class="mx-auto"/>
   <ApartmentCard v-if="store.apartment"/>
 </template>

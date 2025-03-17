@@ -39,7 +39,6 @@
 import Instagram from '@/components/Icons/instagram.vue';
 import Whatsapp from '@/components/Icons/whatsapp.vue';
 import Booking from '@/components/Icons/booking.vue';
-import GoodHome from '@/components/Icons/goodHome.vue';
 </script>
 
 <style lang="scss" scoped>
