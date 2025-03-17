@@ -58,7 +58,7 @@
         я согласен с условиями&nbsp;<a href="">пользовательского соглашения</a>
       </label>
       <div class="flex gap-2 justify-end">
-        <button @click="isShow = null" class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg">Отмена
+        <button @click="store.modal = null" class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg">Отмена
         </button>
         <button class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded-lg">Забронировать</button>
       </div>
