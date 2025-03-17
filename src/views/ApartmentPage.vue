@@ -3,7 +3,7 @@
     <image-preview-picker :list="imageList"/>
     <div class="flex flex-col w-full gap-20">
       <div class="flex flex-col gap-20 py-40 px-80 bg-gray-300 rounded-8">
-        <apartment-button @click="openModal">Забронировать номер</apartment-button>
+        <apartment-button @click="store.modal = currentApartment">Забронировать номер</apartment-button>
         <apartment-button>Смотреть видео</apartment-button>
       </div>
       <div class="flex flex-col gap-20">
@@ -21,8 +21,6 @@
       </div>
     </div>
   </div>
-
-  <apartment-modal v-model="modal"/>
 </template>
 
 <script setup>

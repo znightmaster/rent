@@ -61,7 +61,6 @@
 
     </swiper-slide>
   </swiper>
-  <apartment-modal v-model="modal"/>
 </template>
 
 <script>

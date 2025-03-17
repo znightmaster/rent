@@ -1,14 +1,13 @@
 <template>
   <div
-    v-if="isShow"
     class="fixed z-50 bg-black/60 w-full h-full left-0 top-0 flex items-center justify-center"
-    @click="isShow = null">
+    @click="store.modal = null">
     <div class="flex flex-col w-[600px] h-fit bg-white p-12 rounded-12 gap-3" @click.stop>
       <p class="font-500">Бронирование</p>
       <div class="flex gap-20">
-        <img :src="isShow" class="aspect-square w-100 object-cover object-center" alt=""/>
+        <img src="/img/Banner8.png" class="aspect-square w-100 object-cover object-center" alt=""/>
         <div class="flex flex-col gap-4 justify-between min-h-full">
-          <p>г. Павлодар, Ломова 177</p>
+          <p>{{ store.modal.address }}</p>
           <p>Комнат: 3</p>
           <p>Спальных мест: 4</p>
         </div>
@@ -73,14 +72,15 @@
 import DatePicker from '@/components/UI/DatePicker.vue';
 import BaseSelect from '@/components/UI/BaseSelect.vue';
 import { reactive, ref } from 'vue';
-
-const isShow = defineModel({ required: true, type: [String, null] });
+import { useMainStore } from '@/stores/counter.js';
 
 const date = reactive({
   start: null,
   end: null,
 });
 
+const store = useMainStore();
+console.log(store.modal);
 const guest = ref('1');
 const guestList = ['1', '2', '3', '4+'];
 

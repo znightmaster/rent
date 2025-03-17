@@ -12,6 +12,7 @@ export const useMainStore = defineStore('main', () => {
     apartment.value = data.record;
 
   };
+  const modal = ref(null);
 
-  return { apartment, getApartment };
+  return { apartment, getApartment, modal };
 });

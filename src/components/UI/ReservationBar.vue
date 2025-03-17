@@ -6,7 +6,9 @@
 
     <base-select v-model="guest" label="Гости" :list="guestList"/>
 
-    <button class="bg-teal-600 text-white px-6 py-2 h-fit rounded-md hover:bg-teal-700 transition">
+    <button
+      @click="emit('filter')"
+      class="bg-teal-600 text-white px-6 py-2 h-fit rounded-md hover:bg-teal-700 transition">
       Поиск
     </button>
   </div>
@@ -15,16 +17,18 @@
 
 <script setup>
 import DatePicker from '@/components/UI/DatePicker.vue';
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import BaseSelect from '@/components/UI/BaseSelect.vue';
+
+const emit = defineEmits(['filter']);
 
 const date = reactive({
   start: null,
   end: null,
 });
 
-const guest = ref('1');
-const guestList = ['1', '2', '3', '4+'];
+const guest = defineModel({ required: true });
+const guestList = [1, 2, 3, 4, 5];
 
 </script>
 

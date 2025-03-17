@@ -1,38 +1,44 @@
 <template>
-  <div class="flex flex-col items-center gap-5 justify-center w-full px-4">
+  <div class="flex flex-col items-center gap-40 justify-center w-full px-20">
 
-    <apartment-list-card
-      v-for="(item, index) in store.apartment"
-      :key="index"
-      :data="item"
-      img="/img/Banner8.png"
-      @chlen="openModal"/>
+    <transition-group name="list" appear>
+      <apartment-list-card
+        v-for="item in data"
+        :key="item.id"
+        :data="item"
+        img="/img/Banner8.png"/>
+    </transition-group>
 
-    <apartment-modal
-
-      v-model="modal"/>
   </div>
 </template>
 
 <script setup>
 import ApartmentListCard from '@/components/UI/ApartmentListCard.vue';
-import { ref } from 'vue';
-import ApartmentModal from '@/components/UI/ApartmentModal.vue';
 import { useMainStore } from '@/stores/counter.js';
 
+const props = defineProps({
+  data: {
+    type: Array,
+    required: true,
+  },
+});
+
 const store = useMainStore();
-
-const apartmentList = ['/img/Banner8.png', '/img/Banner9.png', '/img/Banner10.png', '/img/Banner11.png', '/img/Banner12.png'];
-
-const modal = ref(null);
-
-const openModal = (value) => {
-  modal.value = value;
-};
 
 </script>
 
 <style lang="scss" scoped>
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.list-enter-active,
+.list-leave-active,
+.list-move {
+  transition: all 0.3s ease;
+}
 
 </style>
 

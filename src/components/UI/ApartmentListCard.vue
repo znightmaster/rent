@@ -1,5 +1,5 @@
 <template>
-  <div class="w-ful max-w-[1400px] h-[400px] flex border rounded-2xl shadow-lg overflow-hidden">
+  <div class="w-full max-w-[1400px] h-[400px] flex border rounded-2xl shadow-lg overflow-hidden">
 
     <div class="w-1/3 h-full">
       <img
@@ -31,7 +31,7 @@
           </button>
         </router-link>
         <button
-          @click="emit('chlen', img)"
+          @click="store.modal = data"
           class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded-lg">
           Забронировать
         </button>
@@ -41,6 +41,7 @@
 </template>
 
 <script setup>
+import { useMainStore } from '@/stores/counter.js';
 
 const emit = defineEmits(['chlen']);
 
@@ -54,6 +55,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const store = useMainStore();
 
 </script>
 
