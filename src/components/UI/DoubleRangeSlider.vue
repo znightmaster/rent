@@ -24,8 +24,8 @@
     </div>
 
     <div class="relative w-full mt-6">
-      <div class="absolute w-full h-2 bg-gray-300 rounded"></div>
-      <div class="absolute h-2 bg-teal-600 rounded" :style="barStyle"></div>
+      <div class="absolute w-full h-2 bg-gray-300 rounded top-1/2 -translate-y-1/2"></div>
+      <div class="absolute h-2 bg-teal-600 rounded top-1/2 -translate-y-1/2" :style="barStyle"></div>
 
       <input type="range"
              class="range-slider"
@@ -78,6 +78,8 @@ const updateBar = () => {
   appearance: none;
   background: transparent;
   pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 

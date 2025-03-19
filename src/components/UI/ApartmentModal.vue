@@ -7,7 +7,7 @@
       <div class="flex gap-20">
         <img src="/img/Banner8.png" class="aspect-square w-100 object-cover object-center" alt=""/>
         <div class="flex flex-col gap-8  min-h-full">
-          <h2 class="text-18 font-bold">{{store.modal.title}}</h2>
+          <h2 class="text-18 font-bold text-teal-600">{{store.modal.title}}</h2>
           <p>{{ store.modal.address }}</p>
           <p>Спальных мест: {{store.modal.tenant_limit}}</p>
         </div>
