@@ -7,9 +7,9 @@
       <div class="flex gap-20">
         <img src="/img/Banner8.png" class="aspect-square w-100 object-cover object-center" alt=""/>
         <div class="flex flex-col gap-8  min-h-full">
-          <h2 class="text-18 font-bold text-teal-600">{{store.modal.title}}</h2>
+          <h2 class="text-18 font-bold text-teal-600">{{ store.modal.title }}</h2>
           <p>{{ store.modal.address }}</p>
-          <p>Спальных мест: {{store.modal.tenant_limit}}</p>
+          <p>Спальных мест: {{ store.modal.tenant_limit }}</p>
         </div>
       </div>
       <div class="flex gap-20 justify-between top-10">
@@ -24,7 +24,7 @@
       </div>
       <div>
         <p>Сумма за 1 ночь</p>
-        <p>{{store.modal.price}} KZt</p>
+        <p>{{ store.modal.price }} KZt</p>
       </div>
       <div class="flex justify-between gap-4">
         <label class="w-1/2 flex flex-col gap-1">
@@ -54,7 +54,7 @@
         <textarea cols="30" rows="4"
                   class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-600"></textarea>
       </label>
-      <p>Сумма бронирования {{store.modal.price}} KZT Эту сумму вам нужно будет оплатить при заселении.</p>
+      <p>Сумма бронирования {{ store.modal.price }} KZT Эту сумму вам нужно будет оплатить при заселении.</p>
       <label class="flex ">
         <input type="checkbox" class="mr-1">
         я согласен с условиями&nbsp;<a href="">пользовательского соглашения</a>
@@ -86,7 +86,6 @@ const store = useMainStore();
 console.log(store.modal);
 const guest = ref('1');
 const guestList = ['1', '2', '3', '4+'];
-const hoursList = ['1','2']
 
 </script>
 
