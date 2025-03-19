@@ -8,7 +8,7 @@
       </div>
       <div class="flex flex-col gap-20">
         <h2 class="text-2xl font-bold">{{ currentApartment.title }}</h2>
-        <h1 class="text-1xl">{{currentApartment.address}}</h1>
+        <h1 class="text-1xl">{{ currentApartment.address }}</h1>
         <p class="text-gray-600 mt-2">{{ currentApartment.description }}</p>
         <div class="flex gap-12">
           <p
@@ -25,10 +25,9 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import ImagePreviewPicker from '@/components/UI/ImagePreviewPicker.vue';
 import ApartmentButton from '@/components/UI/ApartmentButton.vue';
-import ApartmentModal from '@/components/UI/ApartmentModal.vue';
 import { useMainStore } from '@/stores/counter.js';
 import { useRoute } from 'vue-router';
 
@@ -50,18 +49,6 @@ const imageList = [
   '/img/Banner11.png',
 ];
 
-const textList = [
-  'Оцените все преимущества просторной гостиной, откуда открываются великолепный вид на центр города, и насладитесь каждым мгновением в атмосфере комфорта.',
-  'Площадь номера составляет от 50 до 71 кв.м. Просторный и комфортабельный номер подходит как для деловых встреч, так и для отдыха. Из номера открывается вид на городской пейзаж.',
-  'Светлые и просторные номера выполнены в двух разных цветовых гаммах — бордовой и синей — с элементами декора из темного дерева.',
-  'Размеры и дизайн номеров могут варьироваться. Изображение не соответствует каждому номеру данной категории.',
-];
-
-const modal = ref(false);
-
-const openModal = () => {
-  modal.value = imageList[0];
-};
 </script>
 
 <style lang="scss" scoped>
