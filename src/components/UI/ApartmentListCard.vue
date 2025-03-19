@@ -12,6 +12,7 @@
     <div class="w-2/3 p-6 flex flex-col justify-between">
       <div class="flex flex-col gap-20">
         <h2 class="text-2xl font-bold">{{ data.title }}</h2>
+        <h1 class="text-1xl">{{data.address}}</h1>
         <p class="text-gray-600 mt-2">{{ data.description }}</p>
         <div class="flex gap-12">
           <p

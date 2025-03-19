@@ -8,6 +8,7 @@
       </div>
       <div class="flex flex-col gap-20">
         <h2 class="text-2xl font-bold">{{ currentApartment.title }}</h2>
+        <h1 class="text-1xl">{{currentApartment.address}}</h1>
         <p class="text-gray-600 mt-2">{{ currentApartment.description }}</p>
         <div class="flex gap-12">
           <p

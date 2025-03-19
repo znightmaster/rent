@@ -1,14 +1,12 @@
 <template>
   <div
-    class="relative flex items-center justify-between max-w-[918px] mb:grid mb:grid-cols-2 mb:items-end mb:grid-rows-2 w-full h-fit gap-16 bg-white/30 backdrop-blur-md rounded-lg space-x-4 p-20">
+    class="relative flex items-center justify-between max-w-[918px] mb:grid mb:grid-cols-2 mb:items-end mb:grid-rows-2 w-full h-fit bg-white/30 backdrop-blur-md rounded-lg space-x-4 p-20">
     <date-picker v-model="date.start" label="Заезд"/>
     <date-picker v-model="date.end" label="Выезд"/>
-
     <base-select v-model="guest" label="Гости" :list="guestList"/>
-
     <button
       @click="emit('filter')"
-      class="bg-teal-600 text-white px-6 py-2 h-fit rounded-md hover:bg-teal-700 transition">
+      class="row-span-2 self-end bg-teal-600 text-white px-6 py-2 h-fit rounded-md hover:bg-teal-700 transition">
       Поиск
     </button>
   </div>
