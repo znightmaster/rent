@@ -1,6 +1,5 @@
 <template>
   <div class="w-full max-w-[1400px] h-[400px] flex border rounded-2xl shadow-lg overflow-hidden">
-
     <div class="w-1/3 h-full">
       <img
         :src="img"
@@ -10,19 +9,22 @@
     </div>
 
     <div class="w-2/3 p-6 flex flex-col justify-between">
-      <div class="flex flex-col gap-20">
+      <div class="flex flex-col gap-4">
         <h2 class="text-2xl font-bold">{{ data.title }}</h2>
         <h1 class="text-1xl">{{ data.address }}</h1>
         <p class="text-gray-600 mt-2">{{ data.description }}</p>
-        <div class="flex gap-12">
-          <p
-            v-for="item in data.amenities"
-            :key="item">
-            {{ item }}
-          </p>
-        </div>
-        <p class="text-xl font-semibold text-teal-600 mt-4">{{ data.price }} KZT</p>
 
+        <div class="flex flex-wrap">
+          <span
+            v-for="item in data.amenities"
+            :key="item"
+            class="px-3 py-1"
+          >
+            {{ item }}
+          </span>
+        </div>
+
+        <p class="text-xl font-semibold text-teal-600 mt-4">{{ data.price }} KZT</p>
       </div>
 
       <div class="flex gap-4">
@@ -60,5 +62,4 @@ const store = useMainStore();
 </script>
 
 <style lang="scss" scoped>
-
 </style>
