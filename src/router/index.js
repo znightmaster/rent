@@ -4,6 +4,7 @@ import ContactPage from '@/views/ContactPage.vue';
 import MainPage from '@/views/MainPage.vue';
 import RentListPage from '@/views/RentListPage.vue';
 import RentObjectPage from '@/views/RentObjectPage.vue';
+import TestPage from '@/views/TestPage.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/apartment/:id',
       name: 'apartment',
       component: ApartmentPage,
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: TestPage,
     },
   ],
   scrollBehavior() {

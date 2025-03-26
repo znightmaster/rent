@@ -14,6 +14,9 @@
       <instagram/>
       <whatsapp/>
 
+      <router-link to="/test">
+        Тест
+      </router-link>
       <router-link to="/about">
         О нас
       </router-link>
@@ -30,7 +33,7 @@
 
 import Whatsapp from '@/components/Icons/whatsapp.vue';
 import Instagram from '@/components/Icons/instagram.vue';
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 
 const isScrolled = ref(false);
 
