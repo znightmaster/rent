@@ -7,6 +7,8 @@
     class="mx-auto"/>
   <tag-filter :data="tagList" v-model="tags"/>
 
+  <base-select :list="sortList" label="Сортировка" v-model="currentSort" class="w-200 ml-auto mr-20 mb-40"/>
+
   <ApartmentCard v-if="currentList" :data="currentList"/>
 </template>
 
@@ -14,9 +16,10 @@
 import ApartmentCard from '@/components/UI/ApartmentCard.vue';
 import ReservationBar from '@/components/UI/ReservationBar.vue';
 import { useMainStore } from '@/stores/counter.js';
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, watchEffect } from 'vue';
 import DoubleRangeSlider from '@/components/UI/DoubleRangeSlider.vue';
 import TagFilter from '@/components/UI/TagFilter.vue';
+import BaseSelect from '@/components/UI/BaseSelect.vue';
 
 const store = useMainStore();
 
@@ -45,6 +48,12 @@ const tagList = [
   'Джакузи',
 ];
 
+const currentSort = ref('Цена ↑');
+
+const sortList = [
+  'Цена ↑', 'Цена ↓',
+];
+
 const updateList = () => {
   currentList.value = store.apartment.filter((item) => {
     return item.price >= range.min
@@ -56,9 +65,9 @@ const updateList = () => {
     for (let i = 0; i < tags.value.length; i++) {
       if (!item.amenities.includes(tags.value[i])) return false;
     }
-
     return true;
   });
+
 };
 
 onMounted(async () => {
@@ -66,6 +75,12 @@ onMounted(async () => {
     await store.getApartment();
   }
   currentList.value = store.apartment;
+
+  watchEffect(() => {
+    currentList.value.sort((a, b) => {
+      return currentSort.value === 'Цена ↑' ? a.price - b.price : b.price - a.price;
+    });
+  });
 });
 
 </script>

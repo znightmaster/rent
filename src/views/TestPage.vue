@@ -1,11 +1,21 @@
 <template>
   <div>
+    <form class="flex flex-col w-max-[500px]" @submit.prevent="addTask">
+      <input type="text" placeholder="Пишите тут"
+             v-model="newTask"
+             class="p-2 my-20 mx-20 focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2">
+      <input type="text" placeholder="Пишите тут"
+             v-model="newTime"
+             class="p-2 my-20 mx-20 focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2">
+      <input type="text" placeholder="Пишите тут"
+             v-model="newBenefits"
+             class="p-2 my-20 mx-20 focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2">
+      <button>Добавить задачу</button>
+    </form>
     <test
       v-for="task in tasks"
       :key="task.id"
-      :task="task.task"
-      :time="task.time"
-      :benefit="task.benefit"
+      :item="task"
     />
   </div>
 </template>
@@ -13,8 +23,24 @@
 <script setup>
 
 import Test from '@/components/UI/test.vue';
+import { ref } from 'vue';
 
-const tasks = [
+let id = 0;
+
+const newTask = ref('');
+const newTime = ref(0);
+const newBenefits = ref('');
+
+function addTask() {
+  tasks.value.push({ id: id++, task: newTask.value, time: newTime.value, benefit: newBenefits.value });
+  newTask.value = '';
+}
+
+function removeTask(id) {
+  tasks.value.splice(id, 1);
+}
+
+const tasks = ref([
   {
     id: 1,
     task: 'Прочитать 10 страниц книги',
@@ -75,7 +101,7 @@ const tasks = [
     time: 5,
     benefit: 'Улучшение гибкости и профилактика болей в спине.',
   },
-];
+]);
 
 </script>
 
