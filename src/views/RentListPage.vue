@@ -77,9 +77,11 @@ onMounted(async () => {
   currentList.value = store.apartment;
 
   watchEffect(() => {
-    currentList.value.sort((a, b) => {
-      return currentSort.value === 'Цена ↑' ? a.price - b.price : b.price - a.price;
-    });
+    if (currentList.value) {
+      currentList.value = [...currentList.value].sort((a, b) => {
+        return currentSort.value === 'Цена ↑' ? a.price - b.price : b.price - a.price;
+      });
+    }
   });
 });
 

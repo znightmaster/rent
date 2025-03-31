@@ -5,10 +5,10 @@
            class="h-100 ml-20 transition-transform duration-500 ease-in-out hover:scale-110"/>
     </router-link>
     <div class="flex flex-col gap-2">
-      <router-link to="/about">
+      <router-link to="/about" class="text-black hover:text-teal-700">
         О нас
       </router-link>
-      <router-link to="/rent-list">
+      <router-link to="/rent-list" class="text-black hover:text-teal-700">
         Апартаменты
       </router-link>
     </div>
@@ -16,11 +16,11 @@
       <p>Контакты</p>
       <label for="" class="flex">
         <img src="/telephone.png" alt="">
-        <a href="">: +7 705 987 01 17</a>
+        <a href="" class="text-black hover:text-teal-700">: +7 705 987 01 17</a>
       </label>
       <label for="" class="flex">
         <img src="/mail.png" alt="">
-        <a href="">: dauzer666@gmail.com</a>
+        <a href="" class="text-black hover:text-teal-700">: dauzer666@gmail.com</a>
       </label>
 
     </div>

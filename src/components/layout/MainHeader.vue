@@ -14,13 +14,16 @@
       <instagram/>
       <whatsapp/>
 
-      <router-link to="/test">
+      <router-link to="/game" class="text-black hover:text-teal-700">
+        Игра
+      </router-link>
+      <router-link to="/test" class="text-black hover:text-teal-700">
         Тест
       </router-link>
-      <router-link to="/about">
+      <router-link to="/about" class="text-black hover:text-teal-700">
         О нас
       </router-link>
-      <router-link to="/rent-list">
+      <router-link to="/rent-list" class="text-black hover:text-teal-700">
         Апартаменты
       </router-link>
     </div>

@@ -1,44 +1,77 @@
 <template>
   <div>
-    <form class="flex flex-col w-max-[500px]" @submit.prevent="addTask">
-      <input type="text" placeholder="Пишите тут"
+    <form class="flex flex-col bg-gray-200 m-20 rounded-8">
+      <input type="text" placeholder="Задача"
              v-model="newTask"
              class="p-2 my-20 mx-20 focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2">
-      <input type="text" placeholder="Пишите тут"
-             v-model="newTime"
-             class="p-2 my-20 mx-20 focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2">
-      <input type="text" placeholder="Пишите тут"
+      <base-select :list="timeList" label="" v-model="newTime"
+                   class=" my-20 mx-20 focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2"/>
+      <input type="text" placeholder="Награда"
              v-model="newBenefits"
              class="p-2 my-20 mx-20 focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2">
-      <button>Добавить задачу</button>
+      <div class="flex items-center justify-between mx-20 mb-20">
+        <burger-menu @click="sortTime"/>
+        <button
+          @click="addTask"
+          :disabled="!isValid"
+          class="relative p-2 w-fit bg-teal-600 text-white rounded-lg hover:bg-teal-700"
+          :class="{ 'opacity-50 cursor-not-allowed': !isValid }"
+        >
+          Добавить задачу
+        </button>
+      </div>
     </form>
+
     <test
       v-for="task in tasks"
       :key="task.id"
       :item="task"
+      @remove-task="removeTask"
     />
   </div>
 </template>
 
 <script setup>
-
 import Test from '@/components/UI/test.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import BaseSelect from '@/components/UI/BaseSelect.vue';
+import BurgerMenu from '@/components/UI/BurgerMenu.vue';
 
 let id = 0;
 
 const newTask = ref('');
-const newTime = ref(0);
+const newTime = ref('');
 const newBenefits = ref('');
+const isSorted = ref(true);
+
+function sortTime() {
+  tasks.value.sort((a, b) => isSorted.value ? a.time - b.time : b.time - a.time);
+  isSorted.value = !isSorted.value;
+}
+
+const isValid = computed(() => {
+  return newTask.value && newTime.value && newBenefits.value;
+});
 
 function addTask() {
-  tasks.value.push({ id: id++, task: newTask.value, time: newTime.value, benefit: newBenefits.value });
+
+  tasks.value.push({
+    id: id++,
+    task: newTask.value,
+    time: Number(newTime.value),
+    benefit: newBenefits.value,
+  });
+
   newTask.value = '';
+  newTime.value = '';
+  newBenefits.value = '';
 }
 
-function removeTask(id) {
-  tasks.value.splice(id, 1);
+function removeTask(item) {
+  tasks.value = tasks.value.filter((t) => t !== item);
 }
+
+const timeList = ref([5, 10, 15, 20, 25, 30, 40]);
 
 const tasks = ref([
   {
