@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-col h-screen items-center justify-center gap-10">
-    <h1 v-if="!winner" class="text-2xl">Следующий ходит: {{ currentPlayer }}</h1>
-    <h1 v-else class="text-2xl"> Победил: {{ winner }} </h1>
+    <h1 v-if="!end" class="text-2xl">Следующий ходит: {{ currentPlayer }}</h1>
+    <h1 v-else class="text-2xl"> {{ winner ? `Победил: ${winner}` : 'Ничья' }} </h1>
+
     <div class="grid grid-cols-3 grid-rows-3 w-[600px] h-[600px] bg-teal-700 rounded-8 gap-5 p-5">
       <div
         v-for="(item, index) in board"
@@ -33,6 +34,8 @@ import { ref } from 'vue';
 const board = ref(Array(9).fill(null));
 const currentPlayer = ref('X');
 const winner = ref('');
+const end = ref(false);
+
 const winningCombo = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // по-горизонтали
   [0, 3, 6], [1, 4, 7], [2, 5, 8], // по-вертикали
@@ -40,25 +43,31 @@ const winningCombo = [
 ];
 
 const queuePlayer = (index) => {
-  if (!board.value[index] && !winner.value) {
+  if (!board.value[index] && !end.value) {
     board.value[index] = currentPlayer.value;
+    checkWinner();
+
+    if (!winner.value) {
+      currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X';
+    }
   }
-  if (!winner.value) {
-    currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X';
-  }
+  console.log(board.value.every(Boolean));
+
+  end.value = board.value.every(Boolean);
 };
 
-// const checkWinner = () => {
-//   for (let combo of winningCombo) {
-//     const [a, b, c] = combo;
-//     if (board.value[a] === b) {
-//   }
-// };
+const checkWinner = () => {
+  const isWining = winningCombo.some(combo => combo.every(index => board.value[index] === currentPlayer.value));
+
+  winner.value = isWining ? currentPlayer.value : null;
+  end.value = isWining;
+};
 
 const resetGame = () => {
   board.value = Array(9).fill(null);
   currentPlayer.value = 'X';
   winner.value = null;
+  end.value = false;
 };
 
 </script>
