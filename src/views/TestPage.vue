@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col p-20">
     <form class="flex flex-col bg-gray-200 m-20 rounded-8">
       <input type="text" placeholder="Задача"
              v-model="newTask"
@@ -11,6 +11,17 @@
              class="p-2 my-20 mx-20 focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2">
       <div class="flex items-center justify-between mx-20 mb-20">
         <burger-menu @click="sortTime"/>
+        <div class="flex items-center gap-2">
+          <input
+            v-model="searchItems"
+            placeholder="Поиск"
+            class="flex p-2 self-center focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2"
+          >
+          <button
+            class="flex self-center p-2 w-fit bg-teal-600 text-white rounded-lg hover:bg-teal-700"
+            @click="search"
+          >Поиск</button>
+        </div>
         <button
           @click="addTask"
           :disabled="!isValid"
@@ -43,6 +54,7 @@ const newTask = ref('');
 const newTime = ref('');
 const newBenefits = ref('');
 const isSorted = ref(true);
+const searchItems = ref('');
 
 function sortTime() {
   tasks.value.sort((a, b) => isSorted.value ? a.time - b.time : b.time - a.time);
@@ -70,6 +82,12 @@ function addTask() {
 function removeTask(item) {
   tasks.value = tasks.value.filter((t) => t !== item);
 }
+
+function search(item) {
+  searchItems.value = tasks.value.find((t) => t.id === item.id && t.time === item.time && t.task === item.task && t.benefit === item.benefit);
+}
+console.log(search);
+
 
 const timeList = ref([5, 10, 15, 20, 25, 30, 40]);
 
