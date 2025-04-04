@@ -11,6 +11,13 @@
              class="p-2 my-20 mx-20 focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2">
       <div class="flex items-center justify-between mx-20 mb-20">
         <burger-menu @click="sortTime"/>
+        <div class="flex justify-center items-center gap-2">
+          <input
+            type="search"
+            placeholder="Поиск..."
+            v-model="query"
+            class="p-2 focus:ring-teal-600 border rounded-4 focus:outline-none focus:ring-2">
+        </div>
         <button
           @click="addTask"
           :disabled="!isValid"
@@ -23,7 +30,7 @@
     </form>
 
     <test
-      v-for="task in tasks"
+      v-for="task in searchQuery"
       :key="task.id"
       :item="task"
       @remove-task="removeTask"
@@ -43,6 +50,17 @@ const newTask = ref('');
 const newTime = ref('');
 const newBenefits = ref('');
 const isSorted = ref(true);
+const query = ref('');
+
+const searchQuery = computed(() => {
+  if (!query.value) return tasks.value;
+
+  return tasks.value.filter((item) =>
+    item.task.toLowerCase().includes(query.value.toLowerCase()) ||
+    item.benefit.toLowerCase().includes(query.value.toLowerCase()) ||
+    String(item.time).includes(query.value),
+  );
+});
 
 function sortTime() {
   tasks.value.sort((a, b) => isSorted.value ? a.time - b.time : b.time - a.time);
