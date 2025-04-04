@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const board = ref(Array(9).fill(null));
 const currentPlayer = ref('X');
@@ -43,7 +43,7 @@ const winningCombo = [
 ];
 
 const queuePlayer = (index) => {
-  if (!board.value[index] && !end.value) {
+  if (!board.value[index] && !end.value && !isDraw.value) {
     board.value[index] = currentPlayer.value;
     checkWinner();
 
@@ -51,10 +51,10 @@ const queuePlayer = (index) => {
       currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X';
     }
   }
-  console.log(board.value.every(Boolean));
-
-  end.value = board.value.every(Boolean);
+  else if (isDraw.value) end.value = true;
 };
+
+const isDraw = computed(() => board.value.every(cell => cell) && !winner.value);
 
 const checkWinner = () => {
   const isWining = winningCombo.some(combo => combo.every(index => board.value[index] === currentPlayer.value));
