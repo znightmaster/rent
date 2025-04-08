@@ -1,6 +1,7 @@
 import AboutPage from '@/views/AboutPage.vue';
 import ApartmentPage from '@/views/ApartmentPage.vue';
 import ContactPage from '@/views/ContactPage.vue';
+import FormPage from '@/views/FormPage.vue';
 import GamePage from '@/views/GamePage.vue';
 import MainPage from '@/views/MainPage.vue';
 import RentListPage from '@/views/RentListPage.vue';
@@ -50,6 +51,11 @@ const router = createRouter({
       path: '/game',
       name: 'game',
       component: GamePage,
+    },
+    {
+      path: '/form',
+      name: 'form',
+      component: FormPage,
     },
   ],
   scrollBehavior() {

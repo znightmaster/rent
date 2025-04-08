@@ -14,6 +14,9 @@
       <instagram/>
       <whatsapp/>
 
+      <router-link to="/form" class="text-black hover:text-teal-700">
+        Форма
+      </router-link>
       <router-link to="/game" class="text-black hover:text-teal-700">
         Игра
       </router-link>
