@@ -30,3 +30,7 @@ coverage
 *.tsbuildinfo
 .nuxt/
 Архив.zip
+
+# Nuxt
+.output/
+.data/

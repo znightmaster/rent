@@ -24,19 +24,15 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', onScroll)
   window.removeEventListener('keydown', onKeydown)
-  document.body.style.overflow = ''
 })
 
-// Меню закрывается при переходе; пока оно открыто, страница под ним не прокручивается
+// Меню закрывается при переходе
 watch(
   () => route.fullPath,
   () => {
     menuOpen.value = false
   },
 )
-watch(menuOpen, (open) => {
-  document.body.style.overflow = open ? 'hidden' : ''
-})
 </script>
 
 <template>
@@ -49,84 +45,96 @@ watch(menuOpen, (open) => {
         <img src="/logo.png" alt="GoodHome" width="206" height="315" class="h-14 w-auto lg:h-[4.5rem]" />
       </NuxtLink>
 
-      <nav class="hidden items-center gap-10 lg:flex" aria-label="Основное меню">
-        <NuxtLink
-          v-for="link in links"
-          :key="link.to"
-          :to="link.to"
-          class="border-b border-transparent pb-0.5 transition hover:border-ink/30"
-          active-class="!border-brand text-brand"
-        >
-          {{ link.label }}
-        </NuxtLink>
-      </nav>
+      <!-- Всё, кроме логотипа, — одной компактной группой справа -->
+      <div class="flex items-center gap-2 lg:gap-10">
+        <nav class="hidden items-center gap-8 lg:flex" aria-label="Основное меню">
+          <NuxtLink
+            v-for="link in links"
+            :key="link.to"
+            :to="link.to"
+            class="border-b border-transparent pb-0.5 transition hover:border-ink/30"
+            active-class="!border-brand text-brand"
+          >
+            {{ link.label }}
+          </NuxtLink>
+        </nav>
 
-      <div class="hidden items-center gap-6 lg:flex">
-        <a :href="site.phoneHref" class="transition hover:text-brand">{{ site.phone }}</a>
-        <NuxtLink to="/apartments" class="btn-primary">Выбрать квартиру</NuxtLink>
+        <div class="flex items-center gap-3">
+          <a
+            :href="site.phoneHref"
+            :aria-label="`Позвонить: ${site.phone}`"
+            :title="site.phone"
+            class="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white text-brand transition duration-300 hover:scale-110 hover:border-brand/40"
+          >
+            <SocialIcon name="phone" :size="20" />
+          </a>
+          <NuxtLink to="/apartments" class="btn-primary hidden lg:inline-flex">Выбрать квартиру</NuxtLink>
+          <button
+            type="button"
+            class="flex h-11 w-11 items-center justify-center rounded-full border bg-white transition duration-300 lg:hidden"
+            :class="menuOpen ? 'border-brand/40' : 'border-line'"
+            :aria-label="menuOpen ? 'Закрыть меню' : 'Открыть меню'"
+            :aria-expanded="menuOpen"
+            aria-controls="mobile-menu"
+            @click="menuOpen = !menuOpen"
+          >
+            <span class="relative block h-2.5 w-[1.125rem]">
+              <span
+                class="absolute left-0 block h-px w-[1.125rem] bg-ink transition-all duration-300"
+                :class="menuOpen ? 'top-1/2 rotate-45' : 'top-0'"
+              />
+              <span
+                class="absolute left-0 block h-px w-[1.125rem] bg-ink transition-all duration-300"
+                :class="menuOpen ? 'top-1/2 -rotate-45' : 'bottom-0'"
+              />
+            </span>
+          </button>
+        </div>
       </div>
-
-      <button
-        type="button"
-        class="-mr-2 flex h-12 w-12 items-center justify-center rounded-full lg:hidden"
-        :aria-label="menuOpen ? 'Закрыть меню' : 'Открыть меню'"
-        :aria-expanded="menuOpen"
-        aria-controls="mobile-menu"
-        @click="menuOpen = !menuOpen"
-      >
-        <span class="relative block h-3.5 w-6">
-          <span
-            class="absolute left-0 block h-px w-6 bg-ink transition-all duration-300"
-            :class="menuOpen ? 'top-1/2 rotate-45' : 'top-0'"
-          />
-          <span
-            class="absolute left-0 block h-px w-6 bg-ink transition-all duration-300"
-            :class="menuOpen ? 'top-1/2 -rotate-45' : 'bottom-0'"
-          />
-        </span>
-      </button>
     </div>
   </header>
 
-  <!-- Мобильное меню: во весь экран под шапкой, крупные ссылки -->
+  <!-- Мобильное меню: компактная панель под кнопкой; клик мимо неё закрывает меню -->
+  <Transition name="fade">
+    <div v-if="menuOpen" class="fixed inset-0 top-[4.5rem] z-[35] bg-ink/10 lg:hidden" aria-hidden="true" @click="menuOpen = false" />
+  </Transition>
   <Transition name="sheet">
     <nav
       v-if="menuOpen"
       id="mobile-menu"
-      class="fixed inset-x-0 bottom-0 top-[4.5rem] z-[35] flex flex-col justify-between overflow-y-auto bg-paper px-5 pb-8 pt-6 lg:hidden"
+      class="fixed right-5 top-[4.75rem] z-[36] w-64 origin-top-right max-w-[calc(100vw-2.5rem)] rounded-3xl border border-line bg-white p-2 shadow-[0_24px_60px_-30px_rgba(36,52,59,0.5)] sm:right-8 lg:hidden"
       aria-label="Мобильное меню"
     >
       <ul class="flex flex-col">
-        <li v-for="link in links" :key="link.to" class="border-b border-line">
+        <li v-for="link in links" :key="link.to">
           <NuxtLink
             :to="link.to"
-            class="block py-5 text-3xl font-light"
-            active-class="text-brand"
+            class="block rounded-2xl px-4 py-3 text-lg transition hover:bg-mist"
+            active-class="bg-brand-soft text-brand"
           >
             {{ link.label }}
           </NuxtLink>
         </li>
       </ul>
-
-      <div class="mt-10 flex flex-col gap-4">
-        <a :href="site.phoneHref" class="text-xl">{{ site.phone }}</a>
-        <a :href="site.telegram" target="_blank" rel="noopener noreferrer" class="btn-primary">
-          Написать в Telegram
-        </a>
-        <a :href="site.whatsapp" target="_blank" rel="noopener noreferrer" class="btn-secondary">
-          Написать в WhatsApp
-        </a>
-        <SocialLinks :items="['instagram', 'booking']" class="pt-2" />
-      </div>
+      <div class="mx-4 my-2 h-px bg-line" />
+      <SocialLinks :size="24" class="justify-between px-4 py-3" />
     </nav>
   </Transition>
 </template>
 
 <style scoped>
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
 .sheet-enter-from,
 .sheet-leave-to {
   opacity: 0;
-  transform: translateY(-8px);
+  transform: translateY(-6px) scale(0.98);
 }
 .sheet-enter-active,
 .sheet-leave-active {

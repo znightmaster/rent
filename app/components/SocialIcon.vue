@@ -2,7 +2,9 @@
 // Иконка в цвет темы; при наведении — фирменный цвет приложения и лёгкое увеличение.
 import type { SocialName } from '#shared/types'
 
-defineProps<{ name: SocialName; size?: number }>()
+const props = defineProps<{ name: SocialName | 'phone'; size?: number }>()
+// Instagram и телефон — контурные, остальные — заливкой
+const outline = computed(() => props.name === 'instagram' || props.name === 'phone')
 </script>
 
 <template>
@@ -12,8 +14,8 @@ defineProps<{ name: SocialName; size?: number }>()
     viewBox="0 0 24 24"
     aria-hidden="true"
     focusable="false"
-    :fill="name === 'instagram' ? 'none' : 'currentColor'"
-    :stroke="name === 'instagram' ? 'currentColor' : 'none'"
+    :fill="outline ? 'none' : 'currentColor'"
+    :stroke="outline ? 'currentColor' : 'none'"
     stroke-width="1.8"
     stroke-linecap="round"
     stroke-linejoin="round"
@@ -31,6 +33,10 @@ defineProps<{ name: SocialName; size?: number }>()
       <circle cx="12" cy="12" r="4.2" />
       <circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none" />
     </template>
+    <path
+      v-else-if="name === 'phone'"
+      d="M6.6 3.5h2.3l1.6 4.2-2.1 1.4a11.5 11.5 0 0 0 6.5 6.5l1.4-2.1 4.2 1.6v2.3a2.1 2.1 0 0 1-2.2 2.1A15.6 15.6 0 0 1 4.5 5.7a2.1 2.1 0 0 1 2.1-2.2z"
+    />
     <!-- Booking: квадрат с вырезанной буквой B и точкой -->
     <path
       v-else

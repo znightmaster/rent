@@ -1,30 +1,76 @@
+<script setup lang="ts">
+const route = useRoute()
+
+const links = [
+  { to: '/apartments', label: 'Квартиры' },
+  { to: '/about', label: 'О нас' },
+  { to: '/contact', label: 'Контакты' },
+]
+
+// На главной логотип плавно поднимает к началу страницы; на других — ведёт на главную (она откроется сверху)
+function toTop(e: MouseEvent) {
+  if (route.path !== '/') return
+  e.preventDefault()
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+</script>
+
 <template>
-  <footer class="mt-24 border-t border-line">
-    <div class="container-page grid gap-12 py-14 md:grid-cols-[1.2fr_1fr_1fr]">
-      <div class="flex flex-col gap-4">
-        <NuxtLink to="/" aria-label="GoodHome — на главную" class="w-fit">
-          <img src="/logo.png" alt="GoodHome" width="206" height="315" class="h-20 w-auto" />
+  <!-- Линии подвала — в ширину контента, а не во весь экран -->
+  <footer class="container-page mt-24">
+    <!-- Телефон: мягкая карточка — логотип с соцсетями, разделы «таблетками», контакты -->
+    <div class="flex flex-col gap-6 rounded-3xl bg-mist p-5 md:hidden">
+      <div class="flex items-center justify-between gap-4">
+        <NuxtLink to="/" aria-label="GoodHome — наверх" class="flex-none" @click="toTop">
+          <img src="/logo.png" alt="GoodHome" width="206" height="315" class="h-14 w-auto" />
         </NuxtLink>
-        <p class="max-w-xs text-muted">Дизайнерские гостевые квартиры в Павлодаре.</p>
+        <SocialLinks :size="18" round class="!gap-1.5" />
       </div>
 
-      <nav class="flex flex-col gap-3" aria-label="Разделы сайта">
-        <p class="font-medium">Разделы</p>
-        <NuxtLink to="/apartments" class="text-muted transition hover:text-brand">Квартиры</NuxtLink>
-        <NuxtLink to="/about" class="text-muted transition hover:text-brand">О нас</NuxtLink>
-        <NuxtLink to="/contact" class="text-muted transition hover:text-brand">Контакты</NuxtLink>
+      <nav class="flex flex-wrap gap-2" aria-label="Разделы сайта">
+        <NuxtLink
+          v-for="link in links"
+          :key="link.to"
+          :to="link.to"
+          class="rounded-full border border-line bg-white px-3.5 py-1.5 text-sm transition hover:border-brand/40"
+          active-class="!border-transparent !bg-brand-soft text-brand"
+        >
+          {{ link.label }}
+        </NuxtLink>
       </nav>
 
-      <address class="flex flex-col gap-3 not-italic">
-        <p class="font-medium">Связаться</p>
-        <a :href="site.phoneHref" class="text-muted transition hover:text-brand">{{ site.phone }}</a>
-        <a :href="`mailto:${site.email}`" class="text-muted transition hover:text-brand">{{ site.email }}</a>
-        <SocialLinks class="mt-2" />
+      <address class="flex flex-col gap-1 not-italic">
+        <a :href="site.phoneHref" class="w-fit text-lg transition hover:text-brand">{{ site.phone }}</a>
+        <a :href="`mailto:${site.email}`" class="w-fit break-all text-muted transition hover:text-brand">{{ site.email }}</a>
       </address>
     </div>
 
-    <div class="border-t border-line">
-      <p class="container-page py-5 text-sm text-muted">© {{ new Date().getFullYear() }} GoodHome</p>
+    <!-- Планшет и компьютер: логотип слева, колонки «Разделы» и «Связаться» справа -->
+    <div class="hidden items-start justify-between gap-10 border-t border-line py-12 md:flex">
+      <NuxtLink to="/" aria-label="GoodHome — наверх" class="w-fit" @click="toTop">
+        <img src="/logo.png" alt="GoodHome" width="206" height="315" class="h-20 w-auto transition duration-300 hover:opacity-80" />
+      </NuxtLink>
+
+      <div class="flex gap-14">
+        <nav class="flex flex-col gap-3" aria-label="Разделы сайта">
+          <p class="font-medium">Разделы</p>
+          <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="text-muted transition hover:text-brand">
+            {{ link.label }}
+          </NuxtLink>
+        </nav>
+
+        <!-- Разделитель: тонкая линия цвета «двери», растворяется к концам -->
+        <span class="h-28 w-px flex-none self-center bg-gradient-to-b from-transparent via-steel/60 to-transparent" aria-hidden="true" />
+
+        <address class="flex min-w-0 flex-col gap-3 not-italic">
+          <p class="font-medium">Связаться</p>
+          <a :href="site.phoneHref" class="whitespace-nowrap text-muted transition hover:text-brand">{{ site.phone }}</a>
+          <a :href="`mailto:${site.email}`" class="break-all text-muted transition hover:text-brand">{{ site.email }}</a>
+          <SocialLinks :size="24" class="mt-1 !gap-4" />
+        </address>
+      </div>
     </div>
+
+    <p class="py-5 text-sm text-muted md:border-t md:border-line">© {{ new Date().getFullYear() }} GoodHome</p>
   </footer>
 </template>

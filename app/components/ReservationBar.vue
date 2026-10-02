@@ -49,14 +49,14 @@ const guests = computed({
       <input v-model="to" type="date" :min="minTo" class="field-bare" />
     </label>
 
-    <label class="col-span-2 flex flex-col gap-0.5 bg-white px-5 py-3 transition focus-within:bg-brand-soft/50 lg:col-span-1">
+    <label class="flex flex-col gap-0.5 bg-white px-5 py-3 transition focus-within:bg-brand-soft/50">
       <span class="text-sm text-muted">Гости</span>
       <select v-model="guests" class="field-bare">
         <option v-for="n in guestOptions" :key="n" :value="n">{{ n }}</option>
       </select>
     </label>
 
-    <div class="col-span-2 flex items-stretch bg-white p-2 lg:col-span-1">
+    <div class="flex items-stretch bg-white p-2">
       <button type="submit" class="btn-primary w-full lg:px-8">Найти</button>
     </div>
   </form>

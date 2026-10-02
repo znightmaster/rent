@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { SocialName } from '#shared/types'
 
-withDefaults(defineProps<{ items?: SocialName[]; size?: number }>(), {
+// round — иконки в белых кружках (как кнопка звонка в шапке)
+withDefaults(defineProps<{ items?: SocialName[]; size?: number; round?: boolean }>(), {
   items: () => ['telegram', 'whatsapp', 'instagram', 'booking'],
   size: 28,
 })
@@ -25,7 +26,7 @@ const meta: Record<SocialName, { label: string; href: string; hover: string }> =
         :aria-label="meta[name].label"
         :title="meta[name].label"
         class="block text-brand transition duration-300 ease-out hover:scale-110 focus-visible:scale-110"
-        :class="meta[name].hover"
+        :class="[meta[name].hover, round && 'flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white']"
       >
         <SocialIcon :name="name" :size="size" />
       </a>
