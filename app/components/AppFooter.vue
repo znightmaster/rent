@@ -32,16 +32,16 @@ function toTop(e: MouseEvent) {
           v-for="link in links"
           :key="link.to"
           :to="link.to"
-          class="rounded-full border border-line bg-white px-3.5 py-1.5 text-sm transition hover:border-brand/40"
-          active-class="!border-transparent !bg-brand-soft text-brand"
+          class="rounded-full border border-line bg-white px-3.5 py-1.5 text-sm transition hover:border-rose"
+          active-class="!border-rose !bg-rose-soft text-rose-dark"
         >
           {{ link.label }}
         </NuxtLink>
       </nav>
 
       <address class="flex flex-col gap-1 not-italic">
-        <a :href="site.phoneHref" class="w-fit text-lg transition hover:text-brand">{{ site.phone }}</a>
-        <a :href="`mailto:${site.email}`" class="w-fit break-all text-muted transition hover:text-brand">{{ site.email }}</a>
+        <a :href="site.phoneHref" class="w-fit text-lg transition hover:text-rose-dark">{{ site.phone }}</a>
+        <a :href="`mailto:${site.email}`" class="w-fit break-all text-muted transition hover:text-rose-dark">{{ site.email }}</a>
       </address>
     </div>
 
@@ -54,18 +54,18 @@ function toTop(e: MouseEvent) {
       <div class="flex gap-14">
         <nav class="flex flex-col gap-3" aria-label="Разделы сайта">
           <p class="font-medium">Разделы</p>
-          <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="text-muted transition hover:text-brand">
+          <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="text-muted transition hover:text-rose-dark">
             {{ link.label }}
           </NuxtLink>
         </nav>
 
-        <!-- Разделитель: тонкая линия цвета «двери», растворяется к концам -->
-        <span class="h-28 w-px flex-none self-center bg-gradient-to-b from-transparent via-steel/60 to-transparent" aria-hidden="true" />
+        <!-- Разделитель: тонкая пудровая линия («GOOD»), растворяется к концам -->
+        <span class="h-28 w-px flex-none self-center bg-gradient-to-b from-transparent via-rose to-transparent" aria-hidden="true" />
 
         <address class="flex min-w-0 flex-col gap-3 not-italic">
           <p class="font-medium">Связаться</p>
-          <a :href="site.phoneHref" class="whitespace-nowrap text-muted transition hover:text-brand">{{ site.phone }}</a>
-          <a :href="`mailto:${site.email}`" class="break-all text-muted transition hover:text-brand">{{ site.email }}</a>
+          <a :href="site.phoneHref" class="whitespace-nowrap text-muted transition hover:text-rose-dark">{{ site.phone }}</a>
+          <a :href="`mailto:${site.email}`" class="break-all text-muted transition hover:text-rose-dark">{{ site.email }}</a>
           <SocialLinks :size="24" class="mt-1 !gap-4" />
         </address>
       </div>

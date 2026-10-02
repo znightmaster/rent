@@ -71,13 +71,13 @@ const facts = [
           v-for="fact in facts"
           :key="fact.title"
           class="flex flex-col gap-5 rounded-3xl p-7 transition duration-300"
-          :class="fact.stat ? 'bg-brand-soft' : 'border border-line bg-white hover:border-brand/30'"
+          :class="fact.stat ? 'bg-rose-soft' : 'border border-line bg-white hover:border-rose'"
         >
-          <p v-if="fact.stat" class="text-6xl font-light leading-none tracking-tight text-brand" aria-hidden="true">
+          <p v-if="fact.stat" class="text-6xl font-light leading-none tracking-tight text-rose-dark" aria-hidden="true">
             {{ fact.stat }}
           </p>
-          <!-- Значок в форме арки — та же дверь, что в логотипе -->
-          <span v-else class="flex h-14 w-12 items-center justify-center rounded-b-lg rounded-t-full bg-brand-soft text-brand" aria-hidden="true">
+          <!-- Значок в форме арки — та же дверь, что в логотипе: пудровая арка, бирюзовая иконка -->
+          <span v-else class="flex h-14 w-12 items-center justify-center rounded-b-lg rounded-t-full bg-rose-soft text-brand" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <template v-if="fact.icon === 'key'">
                 <circle cx="8" cy="15" r="4" />
@@ -98,20 +98,20 @@ const facts = [
       </dl>
     </section>
 
-    <!-- Связаться: фирменная панель с контуром двери (карта — на странице «Контакты») -->
+    <!-- Связаться: фирменная панель с контуром двери (карта — на странице «Контакты»).
+         Три цвета логотипа: бирюзовый фон («HOME»), стальная дверь, розовая ручка («GOOD»). -->
     <section class="container-page mt-24" aria-labelledby="where-title">
       <div class="relative overflow-hidden rounded-[2rem] bg-brand px-7 py-12 text-white sm:px-12 lg:px-16 lg:py-16">
         <svg
-          class="pointer-events-none absolute -bottom-10 right-6 hidden h-[130%] text-white/15 md:block lg:right-16"
+          class="pointer-events-none absolute -bottom-10 right-6 hidden h-[130%] md:block lg:right-16"
           viewBox="0 0 200 300"
           fill="none"
-          stroke="currentColor"
           stroke-width="1.5"
           aria-hidden="true"
         >
-          <path d="M10 300V100a90 90 0 0 1 180 0v200" />
-          <path d="M34 300V104a66 66 0 0 1 132 0v196" />
-          <circle cx="146" cy="190" r="5" />
+          <path d="M10 300V100a90 90 0 0 1 180 0v200" class="stroke-white/15" />
+          <path d="M34 300V104a66 66 0 0 1 132 0v196" class="fill-steel/25 stroke-steel/60" />
+          <circle cx="146" cy="190" r="5" class="fill-rose" />
         </svg>
 
         <div class="relative flex max-w-xl flex-col gap-5">
@@ -125,7 +125,7 @@ const facts = [
               :href="site.telegram"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn-primary !bg-white !text-brand hover:!bg-brand-soft focus-visible:outline-white"
+              class="btn-primary !bg-white !text-brand hover:!bg-rose-soft hover:!text-rose-dark focus-visible:outline-white"
             >
               Написать в Telegram
             </a>

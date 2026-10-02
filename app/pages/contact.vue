@@ -14,11 +14,11 @@ useSeoMeta({
       <div class="flex flex-col gap-8">
         <div class="border-t border-line pt-5">
           <p class="text-muted">Телефон</p>
-          <a :href="site.phoneHref" class="text-2xl font-light transition hover:text-brand">{{ site.phone }}</a>
+          <a :href="site.phoneHref" class="text-2xl font-light transition hover:text-rose-dark">{{ site.phone }}</a>
         </div>
         <div class="border-t border-line pt-5">
           <p class="text-muted">Почта</p>
-          <a :href="`mailto:${site.email}`" class="text-2xl font-light transition hover:text-brand">{{ site.email }}</a>
+          <a :href="`mailto:${site.email}`" class="text-2xl font-light transition hover:text-rose-dark">{{ site.email }}</a>
         </div>
         <div class="flex flex-wrap items-center gap-3 border-t border-line pt-5">
           <a :href="site.telegram" target="_blank" rel="noopener noreferrer" class="btn-primary">Написать в Telegram</a>

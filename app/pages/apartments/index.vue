@@ -107,7 +107,7 @@ const preset = computed(() => ({ from: applied.value.from, to: applied.value.to,
           aria-controls="filters-panel"
           @click="filtersOpen = !filtersOpen"
         >
-          Фильтры<span v-if="activeFilters" class="ml-2 rounded-full bg-brand px-2 text-sm text-white">{{ activeFilters }}</span>
+          Фильтры<span v-if="activeFilters" class="ml-2 rounded-full bg-rose-dark px-2 text-sm text-white">{{ activeFilters }}</span>
         </button>
         <label class="sr-only" for="sort">Сортировка</label>
         <select id="sort" v-model="sort" class="field !w-auto !min-h-[2.75rem] !rounded-full !py-2">

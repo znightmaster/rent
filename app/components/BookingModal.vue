@@ -129,7 +129,7 @@ onBeforeUnmount(() => {
           </div>
           <button
             type="button"
-            class="-mr-2 flex h-10 w-10 flex-none items-center justify-center rounded-full text-3xl leading-none text-muted hover:text-ink"
+            class="-mr-2 flex h-10 w-10 flex-none items-center justify-center rounded-full text-3xl leading-none text-muted transition hover:bg-rose-soft hover:text-rose-dark"
             aria-label="Закрыть"
             @click="close"
           >

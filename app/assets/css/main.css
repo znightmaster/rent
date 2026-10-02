@@ -18,6 +18,9 @@
     @apply font-light tracking-tight;
     text-wrap: balance;
   }
+  ::selection {
+    @apply bg-rose-soft text-rose-dark;
+  }
   :focus-visible {
     outline: 2px solid #287888;
     outline-offset: 3px;
@@ -40,14 +43,15 @@
     min-height: 1.75rem;
   }
 
+  /* Кнопки в цветах логотипа: главное действие — бирюзовый «HOME», второстепенное — пудровый «GOOD» */
   .btn-primary {
-    @apply inline-flex min-h-[3rem] items-center justify-center rounded-full bg-brand px-7 py-3 font-medium text-white transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex min-h-[3rem] items-center justify-center rounded-full bg-brand px-7 py-3 font-medium text-white shadow-[0_8px_20px_-12px_rgba(40,120,136,0.8)] transition hover:bg-brand-dark hover:shadow-[0_10px_24px_-12px_rgba(142,110,101,0.9)] disabled:cursor-not-allowed disabled:opacity-60;
   }
   .btn-secondary {
-    @apply inline-flex min-h-[3rem] items-center justify-center rounded-full border border-line bg-white px-7 py-3 font-medium text-ink transition hover:border-ink/40;
+    @apply inline-flex min-h-[3rem] items-center justify-center rounded-full border border-rose/50 bg-white px-7 py-3 font-medium text-ink transition hover:border-rose hover:bg-rose-soft hover:text-rose-dark;
   }
   .text-link {
-    @apply text-brand underline decoration-brand/30 underline-offset-4 transition hover:decoration-brand;
+    @apply text-brand underline decoration-rose underline-offset-4 transition hover:text-rose-dark hover:decoration-rose-dark;
   }
 }
 

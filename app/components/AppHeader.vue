@@ -52,8 +52,8 @@ watch(
             v-for="link in links"
             :key="link.to"
             :to="link.to"
-            class="border-b border-transparent pb-0.5 transition hover:border-ink/30"
-            active-class="!border-brand text-brand"
+            class="border-b border-transparent pb-0.5 transition hover:border-rose"
+            active-class="!border-rose text-rose-dark"
           >
             {{ link.label }}
           </NuxtLink>
@@ -64,7 +64,7 @@ watch(
             :href="site.phoneHref"
             :aria-label="`Позвонить: ${site.phone}`"
             :title="site.phone"
-            class="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white text-brand transition duration-300 hover:scale-110 hover:border-brand/40"
+            class="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white text-brand transition duration-300 hover:scale-110 hover:border-rose hover:bg-rose-soft hover:text-rose-dark"
           >
             <SocialIcon name="phone" :size="20" />
           </a>
@@ -72,7 +72,7 @@ watch(
           <button
             type="button"
             class="flex h-11 w-11 items-center justify-center rounded-full border bg-white transition duration-300 lg:hidden"
-            :class="menuOpen ? 'border-brand/40' : 'border-line'"
+            :class="menuOpen ? 'border-rose bg-rose-soft' : 'border-line hover:border-rose'"
             :aria-label="menuOpen ? 'Закрыть меню' : 'Открыть меню'"
             :aria-expanded="menuOpen"
             aria-controls="mobile-menu"
@@ -109,8 +109,8 @@ watch(
         <li v-for="link in links" :key="link.to">
           <NuxtLink
             :to="link.to"
-            class="block rounded-2xl px-4 py-3 text-lg transition hover:bg-mist"
-            active-class="bg-brand-soft text-brand"
+            class="block rounded-2xl px-4 py-3 text-lg transition hover:bg-rose-soft/60"
+            active-class="!bg-rose-soft text-rose-dark"
           >
             {{ link.label }}
           </NuxtLink>

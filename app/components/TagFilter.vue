@@ -16,7 +16,7 @@ function toggle(tag: string) {
       :aria-pressed="model.includes(tag)"
       class="rounded-full border px-4 py-1.5 text-sm transition"
       :class="
-        model.includes(tag) ? 'border-brand bg-brand text-white' : 'border-line bg-white hover:border-ink/40'
+        model.includes(tag) ? 'border-rose bg-rose-soft text-rose-dark' : 'border-line bg-white hover:border-rose'
       "
       @click="toggle(tag)"
     >
