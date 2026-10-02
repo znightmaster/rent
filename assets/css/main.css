@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-light tracking-tight;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid #287888;
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8;
+  }
+
+  /* Поля форм: input, select, textarea */
+  .field {
+    @apply min-h-[3rem] w-full rounded-xl border border-line bg-white px-4 py-3 text-ink transition placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20;
+  }
+
+  /* Поле без рамки — внутри панели поиска */
+  .field-bare {
+    @apply w-full bg-transparent text-base text-ink focus:outline-none;
+    min-height: 1.75rem;
+  }
+
+  .btn-primary {
+    @apply inline-flex min-h-[3rem] items-center justify-center rounded-full bg-brand px-7 py-3 font-medium text-white transition active:scale-[0.98] hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-secondary {
+    @apply inline-flex min-h-[3rem] items-center justify-center rounded-full border border-line bg-white px-7 py-3 font-medium text-ink transition active:scale-[0.98] hover:border-ink/40;
+  }
+  .text-link {
+    @apply text-brand underline decoration-brand/30 underline-offset-4 transition hover:decoration-brand;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Анимации (единый язык: плавный выезд с мягким замедлением) ---------- */
+
+/* Появление при загрузке страницы: задержка задаётся переменной --d */
+.anim-rise {
+  animation: rise 0.9s cubic-bezier(0.22, 0.8, 0.24, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Появление при прокрутке (директива v-reveal, см. app/plugins/reveal.ts).
+   Классы добавляются скриптом, поэтому лежат вне @layer — иначе Tailwind их вырежет. */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 0.8, 0.24, 1),
+    transform 0.8s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+.reveal--in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Переход между страницами */
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.page-leave-to {
+  opacity: 0;
+}
