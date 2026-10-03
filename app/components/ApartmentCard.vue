@@ -5,20 +5,17 @@ import { formatPrice } from '#shared/utils/format'
 const props = defineProps<{ apartment: Apartment; preset?: BookingPreset }>()
 const { open } = useBookingModal()
 
-const MAX_AMENITIES = 5
-const amenitiesLine = computed(() => {
-  const all = props.apartment.amenities
-  const shown = all.slice(0, MAX_AMENITIES).join(', ')
-  const rest = all.length - MAX_AMENITIES
-  return rest > 0 ? `${shown} и ещё ${rest}` : shown
-})
+// Удобства «таблетками»: первые несколько + счётчик остальных
+const MAX_AMENITIES = 4
+const shownAmenities = computed(() => props.apartment.amenities.slice(0, MAX_AMENITIES))
+const restAmenities = computed(() => props.apartment.amenities.length - MAX_AMENITIES)
 </script>
 
 <template>
-  <article class="grid gap-5 py-8 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:gap-10 md:py-10">
+  <article class="group flex h-full flex-col rounded-3xl border border-line bg-white p-3 transition duration-300 hover:border-rose">
     <NuxtLink
       :to="`/apartments/${apartment.id}`"
-      class="block aspect-[4/3] overflow-hidden rounded-3xl bg-mist"
+      class="relative block aspect-[4/3] overflow-hidden rounded-2xl bg-mist"
       :aria-label="apartment.title"
     >
       <NuxtImg
@@ -26,33 +23,43 @@ const amenitiesLine = computed(() => {
         :alt="apartment.title"
         width="800"
         height="600"
-        sizes="100vw md:480px"
+        sizes="100vw md:50vw lg:580px"
         loading="lazy"
-        class="h-full w-full object-cover"
+        class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.03]"
       />
+      <span class="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-sm backdrop-blur">
+        до {{ apartment.tenantLimit }} гостей
+      </span>
+      <span v-if="apartment.images.length > 1" class="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1 text-sm backdrop-blur">
+        {{ apartment.images.length }} фото
+      </span>
     </NuxtLink>
 
-    <div class="flex flex-col justify-between gap-6">
+    <div class="flex flex-1 flex-col gap-4 px-3 pb-3 pt-5">
       <div>
-        <h2 class="text-2xl font-normal md:text-3xl">
-          <NuxtLink :to="`/apartments/${apartment.id}`" class="underline-offset-4 hover:underline">
+        <h2 class="text-2xl font-normal">
+          <NuxtLink :to="`/apartments/${apartment.id}`" class="transition hover:text-rose-dark">
             {{ apartment.title }}
           </NuxtLink>
         </h2>
         <p class="mt-1 text-muted">{{ apartment.address }}</p>
-        <p class="mt-4 line-clamp-3 max-w-xl">{{ apartment.description }}</p>
-        <p v-if="amenitiesLine" class="mt-3 text-sm text-muted">{{ amenitiesLine }}</p>
       </div>
 
-      <div class="flex flex-wrap items-end justify-between gap-4">
+      <p class="line-clamp-2 text-muted">{{ apartment.description }}</p>
+
+      <ul v-if="shownAmenities.length" class="flex flex-wrap gap-2" aria-label="Удобства">
+        <li v-for="item in shownAmenities" :key="item" class="rounded-full bg-mist px-3 py-1 text-sm">{{ item }}</li>
+        <li v-if="restAmenities > 0" class="rounded-full bg-rose-soft px-3 py-1 text-sm text-rose-dark">+{{ restAmenities }}</li>
+      </ul>
+
+      <div class="mt-auto flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5">
         <p>
           <span class="text-2xl font-medium">{{ formatPrice(apartment.price) }}</span>
           <span class="text-muted"> за сутки</span>
-          <span class="block text-sm text-muted">до {{ apartment.tenantLimit }} гостей</span>
         </p>
-        <div class="flex flex-wrap gap-3">
-          <NuxtLink :to="`/apartments/${apartment.id}`" class="btn-secondary">Подробнее</NuxtLink>
-          <button type="button" class="btn-primary" @click="open(apartment, preset)">Забронировать</button>
+        <div class="flex flex-wrap gap-2">
+          <NuxtLink :to="`/apartments/${apartment.id}`" class="btn-secondary !px-5">Подробнее</NuxtLink>
+          <button type="button" class="btn-primary !px-5" @click="open(apartment, preset)">Забронировать</button>
         </div>
       </div>
     </div>

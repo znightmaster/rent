@@ -1,17 +1,23 @@
 <script setup lang="ts">
 import type { SocialName } from '#shared/types'
 
+type LinkName = SocialName | 'phone' | 'mail'
+
 // round — иконки в белых кружках (как кнопка звонка в шапке)
-withDefaults(defineProps<{ items?: SocialName[]; size?: number; round?: boolean }>(), {
+withDefaults(defineProps<{ items?: LinkName[]; size?: number; round?: boolean }>(), {
   items: () => ['telegram', 'whatsapp', 'instagram', 'booking'],
   size: 28,
 })
 
-const meta: Record<SocialName, { label: string; href: string }> = {
-  telegram: { label: 'Telegram', href: site.telegram },
-  whatsapp: { label: 'WhatsApp', href: site.whatsapp },
-  instagram: { label: 'Instagram', href: site.instagram },
-  booking: { label: 'Booking.com', href: site.booking },
+// Цвета при наведении — фирменные цвета приложений (классы записаны целиком, чтобы Tailwind их увидел).
+// У телефона и почты своего цвета нет — пудровый, как остальные наведения на сайте.
+const meta: Record<LinkName, { label: string; href: string; hover: string; external?: boolean }> = {
+  phone: { label: `Позвонить: ${site.phone}`, href: site.phoneHref, hover: 'hover:text-rose-dark focus-visible:text-rose-dark' },
+  mail: { label: `Написать на почту: ${site.email}`, href: `mailto:${site.email}`, hover: 'hover:text-rose-dark focus-visible:text-rose-dark' },
+  telegram: { label: 'Telegram', href: site.telegram, hover: 'hover:text-[#229ED9] focus-visible:text-[#229ED9]', external: true },
+  whatsapp: { label: 'WhatsApp', href: site.whatsapp, hover: 'hover:text-[#25D366] focus-visible:text-[#25D366]', external: true },
+  instagram: { label: 'Instagram', href: site.instagram, hover: 'hover:text-[#E4405F] focus-visible:text-[#E4405F]', external: true },
+  booking: { label: 'Booking.com', href: site.booking, hover: 'hover:text-[#003580] focus-visible:text-[#003580]', external: true },
 }
 </script>
 
@@ -20,14 +26,14 @@ const meta: Record<SocialName, { label: string; href: string }> = {
     <li v-for="name in items" :key="name">
       <a
         :href="meta[name].href"
-        target="_blank"
-        rel="noopener noreferrer"
+        :target="meta[name].external ? '_blank' : undefined"
+        :rel="meta[name].external ? 'noopener noreferrer' : undefined"
         :aria-label="meta[name].label"
         :title="meta[name].label"
-        class="block text-brand transition duration-300 ease-out hover:scale-110 hover:text-rose-dark focus-visible:scale-110 focus-visible:text-rose-dark"
-        :class="[round &&'flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white']"
+        class="block text-brand transition duration-300 ease-out hover:scale-110 focus-visible:scale-110"
+        :class="[meta[name].hover, round && 'flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white']"
       >
-        <SocialIcon :name="name" :size="size" />
+        <SocialIcon :name="name" :size="name === 'phone' || name === 'mail' ? Math.round(size * 0.9) : size" />
       </a>
     </li>
   </ul>

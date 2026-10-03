@@ -82,12 +82,26 @@ function resetFilters() {
   tags.value = []
 }
 
+// «4 квартиры», «1 квартира», «5 квартир»
+function plural(n: number, one: string, few: string, many: string) {
+  const m10 = n % 10
+  const m100 = n % 100
+  if (m10 === 1 && m100 !== 11) return one
+  if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few
+  return many
+}
+const foundText = computed(() => {
+  const n = filtered.value.length
+  return `${plural(n, 'Найдена', 'Найдено', 'Найдено')} ${n} ${plural(n, 'квартира', 'квартиры', 'квартир')}`
+})
+
 const preset = computed(() => ({ from: applied.value.from, to: applied.value.to, guests: applied.value.guests }))
 </script>
 
 <template>
   <div class="container-page py-6 lg:py-10">
-    <h1 class="text-4xl lg:text-5xl">Квартиры</h1>
+    <h1 class="text-4xl lg:text-6xl">Квартиры</h1>
+    <p class="mt-4 max-w-md text-lg text-muted">Дизайнерские квартиры в новых домах Павлодара. Укажите даты — покажем свободные.</p>
 
     <div class="mt-8 max-w-3xl">
       <ReservationBar v-model="form" @search="applySearch" />
@@ -95,67 +109,101 @@ const preset = computed(() => ({ from: applied.value.from, to: applied.value.to,
     </div>
 
     <!-- Панель: количество, фильтры, сортировка -->
-    <div class="mt-10 flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-      <p class="text-muted" aria-live="polite">
-        <template v-if="status !== 'pending'">Найдено: {{ filtered.length }}</template>
+    <div class="mt-12 flex flex-wrap items-center justify-between gap-3">
+      <p class="text-xl" aria-live="polite">
+        <template v-if="status !== 'pending'">{{ foundText }}</template>
       </p>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
         <button
           type="button"
           class="btn-secondary !min-h-[2.75rem] !px-5"
+          :class="filtersOpen && '!border-rose !bg-rose-soft !text-rose-dark'"
           :aria-expanded="filtersOpen"
           aria-controls="filters-panel"
           @click="filtersOpen = !filtersOpen"
         >
+          <svg class="mr-2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h10M18 7h2M4 17h4M12 17h8" />
+            <circle cx="16" cy="7" r="2" />
+            <circle cx="10" cy="17" r="2" />
+          </svg>
           Фильтры<span v-if="activeFilters" class="ml-2 rounded-full bg-rose-dark px-2 text-sm text-white">{{ activeFilters }}</span>
         </button>
         <label class="sr-only" for="sort">Сортировка</label>
-        <select id="sort" v-model="sort" class="field !w-auto !min-h-[2.75rem] !rounded-full !py-2">
+        <select id="sort" v-model="sort" class="field !w-auto !min-h-[2.75rem] !rounded-full !border-rose/50 !py-2">
           <option value="asc">Сначала дешевле</option>
           <option value="desc">Сначала дороже</option>
         </select>
       </div>
     </div>
 
-    <div v-if="filtersOpen" id="filters-panel" class="flex flex-col gap-6 border-b border-line py-6">
-      <div v-if="bounds.max > bounds.min" class="max-w-xl">
-        <PriceRange
-          :model-value="effectiveRange"
-          :min="bounds.min"
-          :max="bounds.max"
-          @update:model-value="range = $event"
-        />
+    <!-- Фильтры: карточка с ценой и удобствами -->
+    <Transition name="drop">
+      <div
+        v-if="filtersOpen"
+        id="filters-panel"
+        class="mt-4 grid gap-8 rounded-3xl border border-line bg-white p-6 md:grid-cols-2 md:gap-12 lg:p-8"
+      >
+        <div v-if="bounds.max > bounds.min" class="flex flex-col gap-3">
+          <p class="font-medium">Цена за сутки</p>
+          <PriceRange
+            :model-value="effectiveRange"
+            :min="bounds.min"
+            :max="bounds.max"
+            @update:model-value="range = $event"
+          />
+        </div>
+        <div v-if="allTags.length" class="flex flex-col gap-3">
+          <p class="font-medium">Удобства</p>
+          <TagFilter v-model="tags" :tags="allTags" />
+        </div>
+        <button v-if="activeFilters" type="button" class="text-link w-fit md:col-span-2" @click="resetFilters">Сбросить фильтры</button>
       </div>
-      <TagFilter v-if="allTags.length" v-model="tags" :tags="allTags" />
-      <button v-if="activeFilters" type="button" class="text-link w-fit" @click="resetFilters">Сбросить фильтры</button>
-    </div>
+    </Transition>
 
     <!-- Загрузка -->
-    <div v-if="status === 'pending'" class="divide-y divide-line" aria-busy="true">
-      <div v-for="n in 2" :key="n" class="grid gap-5 py-8 md:grid-cols-[5fr_6fr] md:gap-10">
-        <div class="aspect-[4/3] animate-pulse rounded-3xl bg-mist" />
-        <div class="h-40 animate-pulse rounded-3xl bg-mist" />
+    <div v-if="status === 'pending'" class="mt-8 grid gap-6 md:grid-cols-2" aria-busy="true">
+      <div v-for="n in 2" :key="n" class="flex flex-col gap-5 rounded-3xl border border-line bg-white p-3">
+        <div class="aspect-[4/3] animate-pulse rounded-2xl bg-mist" />
+        <div class="mx-3 mb-3 h-32 animate-pulse rounded-2xl bg-mist" />
       </div>
     </div>
 
     <!-- Ошибка -->
-    <div v-else-if="error" class="flex flex-col items-start gap-4 py-12" role="alert">
+    <div v-else-if="error" class="mt-8 flex flex-col items-start gap-4 rounded-3xl bg-mist p-8" role="alert">
       <p class="text-xl">Не удалось загрузить квартиры.</p>
       <button type="button" class="btn-primary" @click="refresh()">Повторить</button>
     </div>
 
     <!-- Пусто -->
-    <div v-else-if="!filtered.length" class="flex flex-col items-start gap-4 py-12">
-      <p class="text-xl">Свободных квартир не нашлось.</p>
-      <p class="max-w-md text-muted">Попробуйте другие даты, меньше гостей или сбросьте фильтры.</p>
-      <button v-if="activeFilters" type="button" class="btn-secondary" @click="resetFilters">Сбросить фильтры</button>
+    <div v-else-if="!filtered.length" class="mt-8 flex flex-col items-start gap-4 rounded-3xl bg-rose-soft p-8 lg:p-10">
+      <p class="text-2xl">Свободных квартир не нашлось</p>
+      <p class="max-w-md text-muted">Попробуйте другие даты, меньше гостей или сбросьте фильтры. А можно просто написать нам — подскажем.</p>
+      <div class="flex flex-wrap gap-3">
+        <button v-if="activeFilters" type="button" class="btn-secondary" @click="resetFilters">Сбросить фильтры</button>
+        <a :href="site.telegram" target="_blank" rel="noopener noreferrer" class="btn-primary">Написать в Telegram</a>
+      </div>
     </div>
 
-    <!-- Список -->
-    <ul v-else class="divide-y divide-line">
+    <!-- Список: сетка карточек -->
+    <ul v-else class="mt-8 grid gap-6 md:grid-cols-2">
       <li v-for="apartment in filtered" :key="apartment.id">
         <ApartmentCard :apartment="apartment" :preset="preset" />
       </li>
     </ul>
   </div>
 </template>
+
+<style scoped>
+.drop-enter-from,
+.drop-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+.drop-enter-active,
+.drop-leave-active {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+</style>

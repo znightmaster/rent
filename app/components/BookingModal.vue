@@ -103,19 +103,26 @@ onBeforeUnmount(() => {
 
 <template>
   <Teleport to="body">
+    <Transition name="backdrop" appear>
     <div
       v-if="apartment"
       class="fixed inset-0 z-50 flex items-end justify-center bg-ink/50 sm:items-center sm:p-4"
       @click.self="close"
     >
+      <!-- На телефоне — шторка снизу (не во весь экран, сверху видна страница), на компьютере — окно по центру -->
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="booking-title"
-        class="compact flex max-h-[100dvh] w-full max-w-[520px] flex-col rounded-t-3xl bg-paper sm:max-h-[calc(100dvh-2rem)] sm:rounded-3xl"
+        class="sheet compact flex max-h-[92dvh] w-full max-w-[520px] flex-col rounded-t-3xl bg-paper sm:max-h-[calc(100dvh-2rem)] sm:rounded-3xl"
       >
+        <!-- «Язычок» шторки -->
+        <div class="flex justify-center pt-2.5 sm:hidden" aria-hidden="true">
+          <span class="h-1 w-10 rounded-full bg-line" />
+        </div>
+
         <!-- Шапка: название и закрытие -->
-        <div class="flex items-center gap-3 px-5 pb-3 pt-5 sm:px-6">
+        <div class="flex items-center gap-3 border-b border-line px-5 pb-4 pt-3 sm:px-6 sm:pt-5">
           <NuxtImg
             :src="apartment.images[0]"
             alt=""
@@ -129,7 +136,7 @@ onBeforeUnmount(() => {
           </div>
           <button
             type="button"
-            class="-mr-2 flex h-10 w-10 flex-none items-center justify-center rounded-full text-3xl leading-none text-muted transition hover:bg-rose-soft hover:text-rose-dark"
+            class="flex h-10 w-10 flex-none items-center justify-center rounded-full border border-line bg-white text-2xl leading-none text-muted transition hover:border-rose hover:bg-rose-soft hover:text-rose-dark"
             aria-label="Закрыть"
             @click="close"
           >
@@ -149,7 +156,7 @@ onBeforeUnmount(() => {
 
         <!-- Форма: поля прокручиваются, кнопки всегда внизу -->
         <form v-else class="flex min-h-0 flex-1 flex-col" novalidate @submit.prevent="submit">
-          <div class="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 pb-4 sm:px-6">
+          <div class="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain px-5 py-4 sm:px-6">
             <div class="grid grid-cols-2 gap-3">
               <label class="flex flex-col gap-1 text-sm text-muted">
                 Заезд
@@ -170,7 +177,7 @@ onBeforeUnmount(() => {
                 :aria-expanded="showTimes"
                 @click="showTimes = !showTimes"
               >
-                {{ showTimes ? 'Скрыть время' : `Время: заезд с ${form.checkInTime}, выезд до ${form.checkOutTime} — изменить` }}
+                {{ showTimes ? 'Скрыть время' : `Заезд с ${form.checkInTime}, выезд до ${form.checkOutTime} · изменить` }}
               </button>
               <div v-if="showTimes" class="mt-3 grid grid-cols-2 gap-3">
                 <label class="flex flex-col gap-1 text-sm text-muted">
@@ -184,7 +191,7 @@ onBeforeUnmount(() => {
               </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid gap-3 sm:grid-cols-2">
               <label class="flex flex-col gap-1 text-sm text-muted">
                 Имя
                 <input ref="nameInput" v-model="form.name" type="text" autocomplete="name" class="field" />
@@ -236,7 +243,7 @@ onBeforeUnmount(() => {
           </div>
 
           <!-- Итог и кнопки — вне прокрутки, видны всегда -->
-          <div class="flex flex-wrap items-center justify-between gap-3 border-t border-line px-5 py-4 sm:px-6">
+          <div class="flex flex-col gap-3 border-t border-line bg-white px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 sm:flex-row sm:items-center sm:justify-between sm:rounded-b-3xl sm:px-6">
             <div class="leading-tight">
               <template v-if="nights > 0">
                 <p class="text-xl font-medium">{{ formatPrice(total) }}</p>
@@ -248,8 +255,8 @@ onBeforeUnmount(() => {
               </template>
             </div>
             <div class="flex gap-2">
-              <button type="button" class="btn-secondary" @click="close">Отмена</button>
-              <button type="submit" class="btn-primary" :disabled="status === 'sending'">
+              <button type="button" class="btn-secondary hidden sm:inline-flex" @click="close">Отмена</button>
+              <button type="submit" class="btn-primary flex-1 sm:flex-none" :disabled="status === 'sending'">
                 {{ status === 'sending' ? 'Отправляем…' : 'Забронировать' }}
               </button>
             </div>
@@ -257,10 +264,36 @@ onBeforeUnmount(() => {
         </form>
       </div>
     </div>
+    </Transition>
   </Teleport>
 </template>
 
 <style scoped>
+/* Появление: фон темнеет, шторка выезжает снизу (на компьютере — окно слегка поднимается) */
+.backdrop-enter-from,
+.backdrop-leave-to {
+  background-color: transparent;
+}
+.backdrop-enter-from .sheet,
+.backdrop-leave-to .sheet {
+  transform: translateY(100%);
+}
+@media (min-width: 640px) {
+  .backdrop-enter-from .sheet,
+  .backdrop-leave-to .sheet {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+.backdrop-enter-active,
+.backdrop-leave-active,
+.backdrop-enter-active .sheet,
+.backdrop-leave-active .sheet {
+  transition:
+    background-color 0.25s ease,
+    transform 0.3s cubic-bezier(0.22, 0.8, 0.24, 1),
+    opacity 0.25s ease;
+}
 /* В окне бронирования поля ниже, чем на страницах, чтобы всё помещалось на экран */
 .compact .field {
   min-height: 2.5rem;

@@ -2,9 +2,9 @@
 // Иконка в цвет темы; при наведении — фирменный цвет приложения и лёгкое увеличение.
 import type { SocialName } from '#shared/types'
 
-const props = defineProps<{ name: SocialName | 'phone'; size?: number }>()
-// Instagram и телефон — контурные, остальные — заливкой
-const outline = computed(() => props.name === 'instagram' || props.name === 'phone')
+const props = defineProps<{ name: SocialName | 'phone' | 'mail'; size?: number }>()
+// Instagram, телефон и почта — контурные, остальные — заливкой
+const outline = computed(() => ['instagram', 'phone', 'mail'].includes(props.name))
 </script>
 
 <template>
@@ -37,6 +37,10 @@ const outline = computed(() => props.name === 'instagram' || props.name === 'pho
       v-else-if="name === 'phone'"
       d="M6.6 3.5h2.3l1.6 4.2-2.1 1.4a11.5 11.5 0 0 0 6.5 6.5l1.4-2.1 4.2 1.6v2.3a2.1 2.1 0 0 1-2.2 2.1A15.6 15.6 0 0 1 4.5 5.7a2.1 2.1 0 0 1 2.1-2.2z"
     />
+    <template v-else-if="name === 'mail'">
+      <rect x="3" y="5" width="18" height="14" rx="2.5" />
+      <path d="m3.8 7 8.2 6 8.2-6" />
+    </template>
     <!-- Booking: квадрат с вырезанной буквой B и точкой -->
     <path
       v-else

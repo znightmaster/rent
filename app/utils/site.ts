@@ -11,6 +11,4 @@ export const site = {
   instagram: 'https://www.instagram.com/goodhome.pvl/',
   // TODO: заменить на ссылку на вашу страницу на Booking.com
   booking: 'https://www.booking.com/index.ru.html',
-  mapEmbed:
-    'https://yandex.ru/map-widget/v1/?um=constructor%3A493aa14c26fdb7e1a31148495175e446981416d427129068e5343bb9f7f4f4f8&source=constructor',
 } as const

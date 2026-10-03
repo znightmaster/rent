@@ -17,7 +17,7 @@ function goSearch() {
 
 // icon — линейная иконка в арочном значке; stat — крупная цифра вместо иконки
 const facts = [
-  { icon: 'key', title: 'Заселение без встречи', text: 'Ключи лежат в сейфе рядом с дверью квартиры. Приезжайте в удобное время.' },
+  { icon: 'lock', title: 'Заселение без встречи', text: 'На дверях электронные замки — код пришлём перед заездом. Приезжайте в удобное время.' },
   { icon: 'bed', title: 'Всё уже есть', text: 'Техника, посуда, свежее бельё, средства гигиены и безлимитный интернет.' },
   { icon: 'house', title: 'Новые дома', text: 'Квартиры в современных домах, с аккуратным дизайнерским ремонтом.' },
   { stat: '9,5', title: 'Оценка на Booking', text: 'Такая средняя оценка у наших квартир на Booking.com.' },
@@ -79,9 +79,11 @@ const facts = [
           <!-- Значок в форме арки — та же дверь, что в логотипе: пудровая арка, бирюзовая иконка -->
           <span v-else class="flex h-14 w-12 items-center justify-center rounded-b-lg rounded-t-full bg-rose-soft text-brand" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <template v-if="fact.icon === 'key'">
-                <circle cx="8" cy="15" r="4" />
-                <path d="M10.9 12.1 20 3M16.5 6.5l2.5 2.5M14 9l2 2" />
+              <!-- Электронный замок: корпус с кнопочной панелью и ручкой -->
+              <template v-if="fact.icon === 'lock'">
+                <rect x="6" y="2.5" width="12" height="19" rx="2.5" />
+                <path d="M9.5 6.5h.01M12 6.5h.01M14.5 6.5h.01M9.5 9h.01M12 9h.01M14.5 9h.01M9.5 11.5h.01M12 11.5h.01M14.5 11.5h.01" stroke-width="2.2" />
+                <path d="M9 16.5h6" />
               </template>
               <template v-else-if="fact.icon === 'bed'">
                 <path d="M3 6v13M3 15h18v4M21 15v-2a3 3 0 0 0-3-3h-7v5" />
