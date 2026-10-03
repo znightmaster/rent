@@ -1,13 +1,14 @@
 <script setup lang="ts">
 const route = useRoute()
+const { t } = useI18n()
 const menuOpen = ref(false)
 const scrolled = ref(false)
 
-const links = [
-  { to: '/apartments', label: 'Квартиры' },
-  { to: '/about', label: 'О нас' },
-  { to: '/contact', label: 'Контакты' },
-]
+const links = computed(() => [
+  { to: '/apartments', label: t('nav.apartments') },
+  { to: '/about', label: t('nav.about') },
+  { to: '/contact', label: t('nav.contact') },
+])
 
 const onScroll = () => {
   scrolled.value = window.scrollY > 8
@@ -41,14 +42,14 @@ watch(
     :class="scrolled || menuOpen ? 'border-line' : 'border-transparent'"
   >
     <div class="container-page flex h-[4.5rem] items-center justify-between lg:h-24">
-      <NuxtLink to="/" aria-label="GoodHome — на главную" class="flex-none">
+      <NuxtLinkLocale to="/" :aria-label="t('nav.home')" class="flex-none">
         <img src="/logo.png" alt="GoodHome" width="206" height="315" class="h-14 w-auto lg:h-[4.5rem]" />
-      </NuxtLink>
+      </NuxtLinkLocale>
 
       <!-- Всё, кроме логотипа, — одной компактной группой справа -->
       <div class="flex items-center gap-2 lg:gap-10">
-        <nav class="hidden items-center gap-8 lg:flex" aria-label="Основное меню">
-          <NuxtLink
+        <nav class="hidden items-center gap-8 lg:flex" :aria-label="t('nav.main')">
+          <NuxtLinkLocale
             v-for="link in links"
             :key="link.to"
             :to="link.to"
@@ -56,24 +57,25 @@ watch(
             active-class="!border-rose text-rose-dark"
           >
             {{ link.label }}
-          </NuxtLink>
+          </NuxtLinkLocale>
         </nav>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3">
+          <LangSwitcher />
           <a
             :href="site.phoneHref"
-            :aria-label="`Позвонить: ${site.phone}`"
+            :aria-label="t('common.call', { phone: site.phone })"
             :title="site.phone"
             class="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white text-brand transition duration-300 hover:scale-110 hover:border-rose hover:bg-rose-soft hover:text-rose-dark"
           >
             <SocialIcon name="phone" :size="20" />
           </a>
-          <NuxtLink to="/apartments" class="btn-primary hidden lg:inline-flex">Выбрать квартиру</NuxtLink>
+          <NuxtLinkLocale to="/apartments" class="btn-primary hidden lg:inline-flex">{{ t('header.choose') }}</NuxtLinkLocale>
           <button
             type="button"
             class="flex h-11 w-11 items-center justify-center rounded-full border bg-white transition duration-300 lg:hidden"
             :class="menuOpen ? 'border-rose bg-rose-soft' : 'border-line hover:border-rose'"
-            :aria-label="menuOpen ? 'Закрыть меню' : 'Открыть меню'"
+            :aria-label="menuOpen ? t('header.closeMenu') : t('header.openMenu')"
             :aria-expanded="menuOpen"
             aria-controls="mobile-menu"
             @click="menuOpen = !menuOpen"
@@ -103,17 +105,17 @@ watch(
       v-if="menuOpen"
       id="mobile-menu"
       class="fixed right-5 top-[4.75rem] z-[36] w-64 origin-top-right max-w-[calc(100vw-2.5rem)] rounded-3xl border border-line bg-white p-2 shadow-[0_24px_60px_-30px_rgba(36,52,59,0.5)] sm:right-8 lg:hidden"
-      aria-label="Мобильное меню"
+      :aria-label="t('nav.mobile')"
     >
       <ul class="flex flex-col">
         <li v-for="link in links" :key="link.to">
-          <NuxtLink
+          <NuxtLinkLocale
             :to="link.to"
             class="block rounded-2xl px-4 py-3 text-lg transition hover:bg-rose-soft/60"
             active-class="!bg-rose-soft text-rose-dark"
           >
             {{ link.label }}
-          </NuxtLink>
+          </NuxtLinkLocale>
         </li>
       </ul>
       <div class="mx-4 my-2 h-px bg-line" />

@@ -29,7 +29,7 @@ const barStyle = computed(() => ({
   <div class="flex w-full max-w-[918px] flex-col gap-4">
     <div class="flex gap-4">
       <label class="flex w-1/2 flex-col text-center">
-        <span class="text-sm text-muted">Цена от, ₸</span>
+        <span class="text-sm text-muted">{{ $t('apartments.priceFrom') }}</span>
         <input
           type="number"
           :min="min"
@@ -41,7 +41,7 @@ const barStyle = computed(() => ({
         />
       </label>
       <label class="flex w-1/2 flex-col text-center">
-        <span class="text-sm text-muted">до, ₸</span>
+        <span class="text-sm text-muted">{{ $t('apartments.priceTo') }}</span>
         <input
           type="number"
           :min="min"
@@ -60,7 +60,7 @@ const barStyle = computed(() => ({
       <input
         type="range"
         class="range-slider"
-        aria-label="Минимальная цена"
+        :aria-label="$t('apartments.priceMin')"
         :min="min"
         :max="max"
         :step="step"
@@ -70,7 +70,7 @@ const barStyle = computed(() => ({
       <input
         type="range"
         class="range-slider"
-        aria-label="Максимальная цена"
+        :aria-label="$t('apartments.priceMax')"
         :min="min"
         :max="max"
         :step="step"
@@ -80,7 +80,7 @@ const barStyle = computed(() => ({
     </div>
 
     <p class="text-center text-ink">
-      Цена за сутки: <span class="font-medium">{{ formatPrice(model[0]) }}</span> —
+      {{ $t('apartments.priceRange') }} <span class="font-medium">{{ formatPrice(model[0]) }}</span> —
       <span class="font-medium">{{ formatPrice(model[1]) }}</span>
     </p>
   </div>

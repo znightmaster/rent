@@ -1,0 +1,204 @@
+{
+  "nav": {
+    "apartments": "Apartments",
+    "about": "About us",
+    "contact": "Contacts",
+    "home": "GoodHome — home page",
+    "top": "GoodHome — back to top",
+    "main": "Main menu",
+    "mobile": "Mobile menu",
+    "sections": "Site sections",
+    "skip": "Skip to content"
+  },
+  "header": {
+    "choose": "Find an apartment",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Site language"
+  },
+  "common": {
+    "perNight": "per night",
+    "upToGuests": "up to {n} guest | up to {n} guests",
+    "photos": "{n} photo | {n} photos",
+    "book": "Book now",
+    "more": "Details",
+    "writeTelegram": "Message on Telegram",
+    "writeWhatsapp": "Message on WhatsApp",
+    "contactUs": "Contact us",
+    "close": "Close",
+    "call": "Call: {phone}",
+    "mail": "Email us: {email}",
+    "nights": "{n} night | {n} nights",
+    "choose": "Find an apartment"
+  },
+  "search": {
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guests": "Guests",
+    "find": "Search",
+    "bothDates": "Enter both dates — check-in and check-out — or clear them."
+  },
+  "footer": {
+    "sections": "Sections",
+    "contact": "Contact"
+  },
+  "trust": {
+    "rating": "rating on Booking",
+    "guests": "guests have stayed with us",
+    "years": "year hosting guests | years hosting guests"
+  },
+  "home": {
+    "seoTitle": "Guest apartments in Pavlodar",
+    "seoDescription": "GoodHome — designer guest apartments in Pavlodar. Self check-in, spotless cleanliness, modern design.",
+    "title": "A cosy place you'll want to come back to",
+    "lead": "Designer apartments in Pavlodar. Self check-in, spotless cleanliness and everything you need for your stay.",
+    "photoAlt": "Living room in a GoodHome apartment",
+    "apartments": "Apartments",
+    "seeAll": "View all",
+    "factsTitle": "What's included",
+    "facts": {
+      "lock": { "title": "Self check-in", "text": "Doors have electronic locks — we'll send you the code before arrival. Arrive whenever it suits you." },
+      "bed": { "title": "Everything's ready", "text": "Appliances, dishes, fresh linen, toiletries and unlimited internet." },
+      "house": { "title": "New buildings", "text": "Apartments in modern buildings with neat designer renovations." },
+      "rating": { "title": "Booking rating", "text": "The average rating of our apartments on Booking.com." }
+    },
+    "whereTitle": "We're in Pavlodar",
+    "whereText": "Message or call us — we'll find an apartment for your dates."
+  },
+  "apartments": {
+    "seoTitle": "Apartments",
+    "seoDescription": "Designer guest apartments in Pavlodar: choose by dates, price and amenities.",
+    "title": "Apartments",
+    "lead": "Designer apartments in new buildings in Pavlodar. Enter your dates — we'll show what's available.",
+    "found": "{n} apartment found | {n} apartments found",
+    "filters": "Filters",
+    "sort": "Sort",
+    "sortAsc": "Price: low to high",
+    "sortDesc": "Price: high to low",
+    "priceTitle": "Price per night",
+    "amenitiesTitle": "Amenities",
+    "reset": "Reset filters",
+    "loadError": "Couldn't load the apartments.",
+    "retry": "Try again",
+    "emptyTitle": "No apartments available",
+    "emptyText": "Try other dates, fewer guests or reset the filters. Or just message us — we'll help.",
+    "priceFrom": "Price from, ₸",
+    "priceTo": "to, ₸",
+    "priceMin": "Minimum price",
+    "priceMax": "Maximum price",
+    "priceRange": "Price per night:",
+    "back": "← All apartments",
+    "video": "Watch video",
+    "notFound": "Apartment not found",
+    "fallbackTitle": "Apartment",
+    "photoOf": "Photo {i} of {n}"
+  },
+  "amenity": {
+    "wifi": "Wi-Fi",
+    "balcony": "Balcony",
+    "jacuzzi": "Jacuzzi",
+    "oven": "Oven",
+    "ac": "Air conditioning",
+    "coffee": "Coffee machine",
+    "kitchen": "Kitchen",
+    "parking": "Parking",
+    "washer": "Washing machine",
+    "tv": "TV",
+    "fridge": "Fridge"
+  },
+  "contact": {
+    "seoTitle": "Contacts",
+    "seoDescription": "Contact GoodHome: Telegram, WhatsApp, phone, email. Guest apartments in Pavlodar.",
+    "title": "Contacts",
+    "lead": "Message or call us — we'll find an apartment for your dates.",
+    "channels": {
+      "telegram": { "title": "Telegram", "value": "Start a chat", "hint": "Fastest replies" },
+      "whatsapp": { "title": "WhatsApp", "value": "Start a chat", "hint": "Messages and calls" },
+      "phone": { "title": "Phone", "hint": "We'll find an apartment for your dates" },
+      "mail": { "title": "Email", "hint": "For documents and invoices" }
+    },
+    "stepsTitle": "How booking works",
+    "steps": {
+      "choose": { "title": "Choose an apartment", "text": "Pick your dates and number of guests on the site, or just message us — we'll help you choose." },
+      "confirm": { "title": "We confirm", "text": "We'll reply and send the address and everything you need to check in. Pay in cash or by card/transfer." },
+      "arrive": { "title": "Check in yourself", "text": "Check-in is contactless: doors have electronic locks, and we'll send the code before arrival. Arrive whenever it suits you." }
+    },
+    "moreTitle": "Photos and guest reviews",
+    "moreText": "Fresh apartment photos on Instagram, ratings and reviews on Booking.com."
+  },
+  "about": {
+    "seoTitle": "About us",
+    "seoDescription": "GoodHome — a network of designer guest apartments in Pavlodar. Contactless check-in, cleanliness, modern design.",
+    "eyebrow": "About GoodHome",
+    "title": "Every apartment is unique in its own way",
+    "lead": "GoodHome is a network of designer guest apartments in Pavlodar. Spotless cleanliness and modern design will pleasantly surprise you.",
+    "heroAlt": "Interior of a GoodHome apartment",
+    "kitchenAlt": "Kitchen and dining area with an arched window",
+    "badge": "New buildings · Pavlodar",
+    "insideTitle": "Just arrive — everything's ready",
+    "inside": {
+      "design": { "lead": "Design and new buildings.", "text": "The apartments are in modern buildings with neat designer renovations." },
+      "clean": { "lead": "Spotless cleanliness.", "text": "A clean apartment and fresh bed linen ready for your arrival." },
+      "contactless": { "lead": "No meeting needed.", "text": "Check-in and check-out are contactless: doors have electronic locks, and we send the code before arrival." }
+    },
+    "includedTitle": "In every apartment",
+    "included": {
+      "appliances": "Home appliances",
+      "dishes": "Dishes",
+      "linen": "Fresh bed linen",
+      "soap": "Soap and shampoo",
+      "toothbrushes": "Toothbrushes",
+      "slippers": "Slippers",
+      "internet": "Unlimited internet"
+    },
+    "livingAlt": "Living room in a GoodHome apartment",
+    "bedroomAlt": "Bedroom in a GoodHome apartment",
+    "benefitsTitle": "Great for trips and business travel",
+    "benefits": {
+      "doc": { "title": "Full set of documents", "text": "We provide documents for business trips and expense reports." },
+      "card": { "title": "Cash or cashless", "text": "We accept both cash and cashless payments." },
+      "percent": { "title": "Discounts", "text": "We have a discount system — ask when booking." },
+      "rating": { "title": "Booking rating", "text": "The average rating of our apartments on Booking.com." }
+    },
+    "ctaTitle": "We'll find an apartment for your dates",
+    "ctaText": "Choose on the site or message us — we'll reply and help you choose."
+  },
+  "booking": {
+    "done": "Request sent",
+    "doneText": "{nights} · {total}. We'll contact you to confirm the booking. Payment on arrival.",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "hideTime": "Hide times",
+    "timeSummary": "Check-in from {in}, check-out by {out} · change",
+    "checkInTime": "Check-in time",
+    "checkOutTime": "Check-out time",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email (optional)",
+    "guests": "Guests",
+    "wishes": "Requests",
+    "consent": "I agree to the terms of the user agreement",
+    "total": "{nights} × {price} · pay on arrival",
+    "pickDates": "per night · choose dates",
+    "cancel": "Cancel",
+    "sending": "Sending…",
+    "errors": {
+      "name": "Enter your name",
+      "phone": "Enter a valid phone number",
+      "email": "Enter a valid email",
+      "from": "Choose a check-in date",
+      "to": "Choose a check-out date",
+      "order": "Check-out must be after check-in",
+      "consent": "Please accept the terms",
+      "send": "Couldn't send the request. Please try again or message us on WhatsApp.",
+      "busy": "The apartment is already booked for these dates."
+    }
+  },
+  "error": {
+    "notFound": "Page not found",
+    "notFoundText": "The address may be mistyped, or the apartment is no longer available.",
+    "generic": "Something went wrong",
+    "genericText": "Refresh the page or go back to the home page.",
+    "home": "Go to home page"
+  }
+}

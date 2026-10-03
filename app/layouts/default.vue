@@ -4,7 +4,7 @@
       href="#content"
       class="sr-only z-50 rounded-full bg-brand px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
     >
-      К содержимому
+      {{ $t('nav.skip') }}
     </a>
     <AppHeader />
     <main id="content" class="flex flex-grow flex-col">

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { Apartment, SearchValue } from '#shared/types'
 
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
+
 useSeoMeta({
-  title: 'Гостевые квартиры в Павлодаре',
-  description:
-    'GoodHome — дизайнерские гостевые квартиры в Павлодаре. Заселение без встречи, чистота, современный дизайн.',
+  title: () => t('home.seoTitle'),
+  description: () => t('home.seoDescription'),
 })
 
 const search = ref<SearchValue>({ from: '', to: '', guests: 1 })
@@ -12,27 +14,25 @@ const { data: apartments } = await useFetch<Apartment[]>('/api/apartments')
 
 function goSearch() {
   const { from, to, guests } = search.value
-  navigateTo({ path: '/apartments', query: { guests, ...(from && to ? { from, to } : {}) } })
+  navigateTo({ path: localePath('/apartments'), query: { guests, ...(from && to ? { from, to } : {}) } })
 }
 
 // icon — линейная иконка в арочном значке; stat — крупная цифра вместо иконки
-const facts = [
-  { icon: 'lock', title: 'Заселение без встречи', text: 'На дверях электронные замки — код пришлём перед заездом. Приезжайте в удобное время.' },
-  { icon: 'bed', title: 'Всё уже есть', text: 'Техника, посуда, свежее бельё, средства гигиены и безлимитный интернет.' },
-  { icon: 'house', title: 'Новые дома', text: 'Квартиры в современных домах, с аккуратным дизайнерским ремонтом.' },
-  { stat: '9,5', title: 'Оценка на Booking', text: 'Такая средняя оценка у наших квартир на Booking.com.' },
-]
+const facts = computed(() => [
+  { icon: 'lock', title: t('home.facts.lock.title'), text: t('home.facts.lock.text') },
+  { icon: 'bed', title: t('home.facts.bed.title'), text: t('home.facts.bed.text') },
+  { icon: 'house', title: t('home.facts.house.title'), text: t('home.facts.house.text') },
+  { stat: formatRating(site.stats.rating, locale.value), title: t('home.facts.rating.title'), text: t('home.facts.rating.text') },
+])
 </script>
 
 <template>
   <div>
     <!-- Первый экран: заголовок, поиск и «дверь» с фото -->
-    <section class="container-page grid items-center gap-10 pb-16 pt-4 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pb-24 lg:pt-8">
+    <section class="container-page grid items-center gap-10 pb-8 pt-4 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pb-12 lg:pt-8">
       <div class="flex flex-col gap-6">
-        <h1 class="text-[2.6rem] leading-[1.08] sm:text-6xl lg:text-7xl">Уют, в который хочется возвращаться</h1>
-        <p class="max-w-md text-lg text-muted">
-          Дизайнерские квартиры в Павлодаре. Заселение без встречи, чистота и всё необходимое для жизни.
-        </p>
+        <h1 class="text-[2.6rem] leading-[1.08] sm:text-6xl lg:text-7xl">{{ t('home.title') }}</h1>
+        <p class="max-w-md text-lg text-muted">{{ t('home.lead') }}</p>
         <div class="hidden lg:relative lg:z-10 lg:mt-8 lg:block lg:w-[calc(100%+7rem)]">
           <ReservationBar v-model="search" @search="goSearch" />
         </div>
@@ -40,18 +40,23 @@ const facts = [
 
       <!-- На телефоне поиск лежит на низу фото (14px — отступ фото от рамки «двери»), края совпадают -->
       <div class="relative">
-        <DoorImage src="/img/banner-10.webp" alt="Гостиная в квартире GoodHome" position="35% center" reveal />
+        <DoorImage src="/img/banner-10.webp" :alt="t('home.photoAlt')" position="35% center" reveal />
         <div class="absolute inset-x-[14px] bottom-[14px] lg:hidden">
           <ReservationBar v-model="search" @search="goSearch" />
         </div>
       </div>
     </section>
 
+    <!-- Цифры доверия — сразу под первым экраном -->
+    <div class="container-page mb-16 lg:mb-24">
+      <TrustStats />
+    </div>
+
     <!-- Квартиры -->
     <section v-if="apartments?.length" class="container-page" aria-labelledby="apartments-title">
       <div class="mb-8 flex items-end justify-between gap-4">
-        <h2 id="apartments-title" class="text-3xl lg:text-4xl">Квартиры</h2>
-        <NuxtLink to="/apartments" class="text-link">Смотреть все</NuxtLink>
+        <h2 id="apartments-title" class="text-3xl lg:text-4xl">{{ t('home.apartments') }}</h2>
+        <NuxtLinkLocale to="/apartments" class="text-link">{{ t('home.seeAll') }}</NuxtLinkLocale>
       </div>
       <!-- На телефоне — лента с прокруткой (следующая карточка выглядывает), на планшете и выше — сетка -->
       <div
@@ -65,7 +70,7 @@ const facts = [
 
     <!-- Что входит -->
     <section class="container-page mt-24" aria-labelledby="facts-title">
-      <h2 id="facts-title" class="mb-8 text-3xl lg:text-4xl">Что входит в проживание</h2>
+      <h2 id="facts-title" class="mb-8 text-3xl lg:text-4xl">{{ t('home.factsTitle') }}</h2>
       <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
         <div
           v-for="fact in facts"
@@ -117,8 +122,8 @@ const facts = [
         </svg>
 
         <div class="relative flex max-w-xl flex-col gap-5">
-          <h2 id="where-title" class="text-3xl text-white lg:text-5xl">Мы в Павлодаре</h2>
-          <p class="text-lg text-white/80">Напишите или позвоните — подберём квартиру на ваши даты.</p>
+          <h2 id="where-title" class="text-3xl text-white lg:text-5xl">{{ t('home.whereTitle') }}</h2>
+          <p class="text-lg text-white/80">{{ t('home.whereText') }}</p>
           <a :href="site.phoneHref" class="w-fit whitespace-nowrap text-3xl font-light transition hover:text-white/75 focus-visible:outline-white">
             {{ site.phone }}
           </a>
@@ -129,7 +134,7 @@ const facts = [
               rel="noopener noreferrer"
               class="btn-primary !bg-white !text-brand hover:!bg-rose-soft hover:!text-rose-dark focus-visible:outline-white"
             >
-              Написать в Telegram
+              {{ t('common.writeTelegram') }}
             </a>
             <a
               :href="site.whatsapp"

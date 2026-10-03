@@ -35,7 +35,7 @@ watch(
         type="button"
         class="h-16 w-16 flex-none overflow-hidden rounded-xl transition sm:h-20 sm:w-20"
         :class="index === current ? 'ring-2 ring-brand ring-offset-2 ring-offset-paper' : 'opacity-70 hover:opacity-100'"
-        :aria-label="`Фото ${index + 1} из ${images.length}`"
+        :aria-label="$t('apartments.photoOf', { i: index + 1, n: images.length })"
         :aria-current="index === current"
         @click="current = index"
       >

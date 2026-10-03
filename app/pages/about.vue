@@ -1,18 +1,21 @@
 <script setup lang="ts">
+const { t, locale } = useI18n()
+
 useSeoMeta({
-  title: 'О нас',
-  description: 'GoodHome — сеть дизайнерских гостевых квартир в Павлодаре. Бесконтактное заселение, чистота, современный дизайн.',
+  title: () => t('about.seoTitle'),
+  description: () => t('about.seoDescription'),
 })
 
-const included = ['Бытовая техника', 'Посуда', 'Свежее постельное бельё', 'Мыло и шампунь', 'Зубные щётки', 'Тапочки', 'Безлимитный интернет']
+const inside = ['design', 'clean', 'contactless'] as const
+const included = ['appliances', 'dishes', 'linen', 'soap', 'toothbrushes', 'slippers', 'internet'] as const
 
 // icon — линейная иконка в арочном значке; stat — крупная цифра вместо иконки
-const benefits = [
-  { icon: 'doc', title: 'Полный пакет документов', text: 'Предоставляем документы для командировок и отчётности.' },
-  { icon: 'card', title: 'Наличные и безнал', text: 'Принимаем наличный и безналичный расчёт.' },
-  { icon: 'percent', title: 'Система скидок', text: 'Действует система скидок — уточняйте при бронировании.' },
-  { stat: '9,5', title: 'Оценка на Booking', text: 'Средняя оценка наших квартир на Booking.com.' },
-]
+const benefits = computed(() => [
+  { icon: 'doc', title: t('about.benefits.doc.title'), text: t('about.benefits.doc.text') },
+  { icon: 'card', title: t('about.benefits.card.title'), text: t('about.benefits.card.text') },
+  { icon: 'percent', title: t('about.benefits.percent.title'), text: t('about.benefits.percent.text') },
+  { stat: formatRating(site.stats.rating, locale.value), title: t('about.benefits.rating.title'), text: t('about.benefits.rating.text') },
+])
 </script>
 
 <template>
@@ -20,15 +23,12 @@ const benefits = [
     <!-- Первый экран -->
     <section class="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
       <div class="flex flex-col gap-6">
-        <p class="text-sm uppercase tracking-[0.2em] text-rose-dark">О GoodHome</p>
-        <h1 class="text-4xl lg:text-6xl">Каждая квартира по-своему уникальна</h1>
-        <p class="max-w-xl text-lg text-muted">
-          GoodHome — сеть дизайнерских гостевых квартир в Павлодаре. Идеальная чистота и современный дизайн приятно
-          удивляют.
-        </p>
-        <NuxtLink to="/apartments" class="btn-primary mt-2 w-fit">Выбрать квартиру</NuxtLink>
+        <p class="text-sm uppercase tracking-[0.2em] text-rose-dark">{{ t('about.eyebrow') }}</p>
+        <h1 class="text-4xl lg:text-6xl">{{ t('about.title') }}</h1>
+        <p class="max-w-xl text-lg text-muted">{{ t('about.lead') }}</p>
+        <NuxtLinkLocale to="/apartments" class="btn-primary mt-2 w-fit">{{ t('common.choose') }}</NuxtLinkLocale>
       </div>
-      <DoorImage src="/img/banner-12.webp" alt="Интерьер квартиры GoodHome" reveal />
+      <DoorImage src="/img/banner-12.webp" :alt="t('about.heroAlt')" reveal />
     </section>
 
     <!-- Квартиры: фото-арка и что внутри -->
@@ -37,7 +37,7 @@ const benefits = [
         <!-- Арочный верх — то же окно-дверь, что в логотипе -->
         <NuxtImg
           src="/img/banner-11.webp"
-          alt="Кухня-столовая с арочным окном"
+          :alt="t('about.kitchenAlt')"
           width="800"
           height="1000"
           sizes="100vw md:420px"
@@ -45,30 +45,22 @@ const benefits = [
           class="aspect-[4/5] w-full rounded-b-3xl rounded-t-full object-cover"
         />
         <span class="absolute -bottom-4 -right-2 rounded-full bg-white px-4 py-2 text-sm shadow-[0_10px_30px_-12px_rgba(36,52,59,0.4)] md:-right-6">
-          Новые дома · Павлодар
+          {{ t('about.badge') }}
         </span>
       </div>
 
       <div class="flex flex-col gap-8">
-        <h2 id="inside-title" class="text-3xl lg:text-4xl">Приезжайте — всё уже готово</h2>
+        <h2 id="inside-title" class="text-3xl lg:text-4xl">{{ t('about.insideTitle') }}</h2>
         <div class="flex flex-col gap-5 text-muted">
-          <p>
-            <span class="text-ink">Дизайн и новые дома.</span> Квартиры находятся в современных домах, с аккуратным
-            дизайнерским ремонтом.
-          </p>
-          <p>
-            <span class="text-ink">Идеальная чистота.</span> Чистая квартира и свежее постельное бельё к вашему приезду.
-          </p>
-          <p>
-            <span class="text-ink">Без встречи.</span> Заселение и выселение бесконтактные: на дверях электронные
-            замки, код мы присылаем перед заездом.
+          <p v-for="key in inside" :key="key">
+            <span class="text-ink">{{ t(`about.inside.${key}.lead`) }}</span> {{ t(`about.inside.${key}.text`) }}
           </p>
         </div>
         <div>
-          <p class="mb-3 font-medium">В каждой квартире</p>
+          <p class="mb-3 font-medium">{{ t('about.includedTitle') }}</p>
           <ul class="flex flex-wrap gap-2">
             <li v-for="item in included" :key="item" class="rounded-full border border-line bg-white px-3.5 py-1.5 text-sm">
-              {{ item }}
+              {{ t(`about.included.${item}`) }}
             </li>
           </ul>
         </div>
@@ -79,7 +71,7 @@ const benefits = [
     <div class="mt-24 grid gap-4 md:grid-cols-[1.35fr_1fr] lg:mt-32 lg:gap-5">
       <NuxtImg
         src="/img/banner-8.webp"
-        alt="Гостиная в квартире GoodHome"
+        :alt="t('about.livingAlt')"
         width="1200"
         height="900"
         sizes="100vw md:700px"
@@ -88,7 +80,7 @@ const benefits = [
       />
       <NuxtImg
         src="/img/banner-9.webp"
-        alt="Спальня в квартире GoodHome"
+        :alt="t('about.bedroomAlt')"
         width="900"
         height="900"
         sizes="100vw md:500px"
@@ -99,7 +91,7 @@ const benefits = [
 
     <!-- Для гостей -->
     <section class="mt-24 lg:mt-32" aria-labelledby="benefits-title">
-      <h2 id="benefits-title" class="mb-8 text-3xl lg:text-4xl">Удобно для поездок и командировок</h2>
+      <h2 id="benefits-title" class="mb-8 text-3xl lg:text-4xl">{{ t('about.benefitsTitle') }}</h2>
       <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
         <div
           v-for="b in benefits"
@@ -132,11 +124,11 @@ const benefits = [
 
     <!-- Финал -->
     <section class="mt-24 flex flex-col items-center gap-6 rounded-3xl bg-rose-soft px-7 py-12 text-center lg:mt-32 lg:py-16">
-      <h2 class="max-w-xl text-3xl lg:text-4xl">Подберём квартиру на ваши даты</h2>
-      <p class="max-w-md text-muted">Выберите на сайте или напишите нам — ответим и поможем с выбором.</p>
+      <h2 class="max-w-xl text-3xl lg:text-4xl">{{ t('about.ctaTitle') }}</h2>
+      <p class="max-w-md text-muted">{{ t('about.ctaText') }}</p>
       <div class="flex flex-wrap justify-center gap-3">
-        <NuxtLink to="/apartments" class="btn-primary">Выбрать квартиру</NuxtLink>
-        <NuxtLink to="/contact" class="btn-secondary">Связаться</NuxtLink>
+        <NuxtLinkLocale to="/apartments" class="btn-primary">{{ t('common.choose') }}</NuxtLinkLocale>
+        <NuxtLinkLocale to="/contact" class="btn-secondary">{{ t('common.contactUs') }}</NuxtLinkLocale>
       </div>
     </section>
   </div>

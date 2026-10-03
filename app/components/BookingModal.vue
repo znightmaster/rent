@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { BookingResponse } from '#shared/types'
 import { addDaysISO, nightsBetween, todayISO } from '#shared/utils/date'
-import { formatPrice, pluralNights } from '#shared/utils/format'
+import { formatPrice } from '#shared/utils/format'
 
 const { state, close } = useBookingModal()
+const { t, locale } = useI18n()
+const nightsText = (n: number) => t('common.nights', n)
 const apartment = computed(() => state.value?.apartment ?? null)
 const today = todayISO()
 
@@ -57,13 +59,13 @@ function onFromChange() {
 
 function validate(): boolean {
   Object.keys(errors).forEach((key) => delete errors[key])
-  if (form.name.trim().length < 2) errors.name = 'Укажите имя'
-  if (!/^\+?\d{10,15}$/.test(form.phone.replace(/[^\d+]/g, ''))) errors.phone = 'Укажите корректный телефон'
-  if (form.email && !/^\S+@\S+\.\S+$/.test(form.email)) errors.email = 'Укажите корректный e-mail'
-  if (!form.from) errors.from = 'Выберите дату заезда'
-  if (!form.to) errors.to = 'Выберите дату выезда'
-  else if (nights.value < 1) errors.to = 'Выезд должен быть позже заезда'
-  if (!form.consent) errors.consent = 'Нужно согласие с условиями'
+  if (form.name.trim().length < 2) errors.name = t('booking.errors.name')
+  if (!/^\+?\d{10,15}$/.test(form.phone.replace(/[^\d+]/g, ''))) errors.phone = t('booking.errors.phone')
+  if (form.email && !/^\S+@\S+\.\S+$/.test(form.email)) errors.email = t('booking.errors.email')
+  if (!form.from) errors.from = t('booking.errors.from')
+  if (!form.to) errors.to = t('booking.errors.to')
+  else if (nights.value < 1) errors.to = t('booking.errors.order')
+  if (!form.consent) errors.consent = t('booking.errors.consent')
   return Object.keys(errors).length === 0
 }
 
@@ -78,8 +80,11 @@ async function submit() {
     })
     status.value = 'done'
   } catch (e: unknown) {
-    const err = e as { data?: { message?: string } }
-    serverError.value = err.data?.message || 'Не удалось отправить заявку. Попробуйте ещё раз или напишите нам в WhatsApp.'
+    // Сервер отвечает по-русски: на других языках показываем свой текст (занятые даты — отдельно)
+    const err = e as { statusCode?: number; data?: { message?: string } }
+    if (err.statusCode === 409) serverError.value = t('booking.errors.busy')
+    else if (locale.value === 'ru' && err.data?.message) serverError.value = err.data.message
+    else serverError.value = t('booking.errors.send')
     status.value = 'error'
   }
 }
@@ -132,12 +137,12 @@ onBeforeUnmount(() => {
           />
           <div class="min-w-0 flex-1">
             <h2 id="booking-title" class="truncate text-xl font-normal leading-tight">{{ apartment.title }}</h2>
-            <p class="truncate text-sm text-muted">{{ apartment.address }} · до {{ apartment.tenantLimit }} гостей</p>
+            <p class="truncate text-sm text-muted">{{ apartment.address }} · {{ t('common.upToGuests', apartment.tenantLimit) }}</p>
           </div>
           <button
             type="button"
             class="flex h-10 w-10 flex-none items-center justify-center rounded-full border border-line bg-white text-2xl leading-none text-muted transition hover:border-rose hover:bg-rose-soft hover:text-rose-dark"
-            aria-label="Закрыть"
+            :aria-label="t('common.close')"
             @click="close"
           >
             ×
@@ -146,12 +151,11 @@ onBeforeUnmount(() => {
 
         <!-- Успех -->
         <div v-if="status === 'done' && result" class="flex flex-col items-center gap-4 px-5 pb-8 pt-4 text-center sm:px-6">
-          <p class="text-2xl font-light text-brand">Заявка отправлена</p>
+          <p class="text-2xl font-light text-brand">{{ t('booking.done') }}</p>
           <p v-if="result.nights">
-            {{ pluralNights(result.nights) }} · {{ formatPrice(result.total) }}. Мы свяжемся с вами, чтобы
-            подтвердить бронь. Оплата — при заселении.
+            {{ t('booking.doneText', { nights: nightsText(result.nights), total: formatPrice(result.total) }) }}
           </p>
-          <button type="button" class="btn-primary" @click="close">Закрыть</button>
+          <button type="button" class="btn-primary" @click="close">{{ t('common.close') }}</button>
         </div>
 
         <!-- Форма: поля прокручиваются, кнопки всегда внизу -->
@@ -159,12 +163,12 @@ onBeforeUnmount(() => {
           <div class="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain px-5 py-4 sm:px-6">
             <div class="grid grid-cols-2 gap-3">
               <label class="flex flex-col gap-1 text-sm text-muted">
-                Заезд
+                {{ t('booking.checkIn') }}
                 <input v-model="form.from" type="date" :min="today" class="field" @change="onFromChange" />
                 <span v-if="errors.from" class="text-red-700">{{ errors.from }}</span>
               </label>
               <label class="flex flex-col gap-1 text-sm text-muted">
-                Выезд
+                {{ t('booking.checkOut') }}
                 <input v-model="form.to" type="date" :min="minTo" class="field" />
                 <span v-if="errors.to" class="text-red-700">{{ errors.to }}</span>
               </label>
@@ -177,15 +181,15 @@ onBeforeUnmount(() => {
                 :aria-expanded="showTimes"
                 @click="showTimes = !showTimes"
               >
-                {{ showTimes ? 'Скрыть время' : `Заезд с ${form.checkInTime}, выезд до ${form.checkOutTime} · изменить` }}
+                {{ showTimes ? t('booking.hideTime') : t('booking.timeSummary', { in: form.checkInTime, out: form.checkOutTime }) }}
               </button>
               <div v-if="showTimes" class="mt-3 grid grid-cols-2 gap-3">
                 <label class="flex flex-col gap-1 text-sm text-muted">
-                  Время заезда
+                  {{ t('booking.checkInTime') }}
                   <input v-model="form.checkInTime" type="time" step="1800" class="field" />
                 </label>
                 <label class="flex flex-col gap-1 text-sm text-muted">
-                  Время выезда
+                  {{ t('booking.checkOutTime') }}
                   <input v-model="form.checkOutTime" type="time" step="1800" class="field" />
                 </label>
               </div>
@@ -193,22 +197,22 @@ onBeforeUnmount(() => {
 
             <div class="grid gap-3 sm:grid-cols-2">
               <label class="flex flex-col gap-1 text-sm text-muted">
-                Имя
+                {{ t('booking.name') }}
                 <input ref="nameInput" v-model="form.name" type="text" autocomplete="name" class="field" />
                 <span v-if="errors.name" class="text-red-700">{{ errors.name }}</span>
               </label>
               <label class="flex flex-col gap-1 text-sm text-muted">
-                Телефон
+                {{ t('booking.phone') }}
                 <input v-model="form.phone" type="tel" autocomplete="tel" placeholder="+7" class="field" />
                 <span v-if="errors.phone" class="text-red-700">{{ errors.phone }}</span>
               </label>
               <label class="flex flex-col gap-1 text-sm text-muted">
-                E-mail (необязательно)
+                {{ t('booking.email') }}
                 <input v-model="form.email" type="email" autocomplete="email" class="field" />
                 <span v-if="errors.email" class="text-red-700">{{ errors.email }}</span>
               </label>
               <label class="flex flex-col gap-1 text-sm text-muted">
-                Гости
+                {{ t('booking.guests') }}
                 <select v-model.number="form.guests" class="field">
                   <option v-for="n in guestOptions" :key="n" :value="n">{{ n }}</option>
                 </select>
@@ -216,7 +220,7 @@ onBeforeUnmount(() => {
             </div>
 
             <label class="flex flex-col gap-1 text-sm text-muted">
-              Пожелания
+              {{ t('booking.wishes') }}
               <textarea v-model="form.comment" rows="2" maxlength="1000" class="field" />
             </label>
 
@@ -234,7 +238,7 @@ onBeforeUnmount(() => {
             <div>
               <label class="flex items-start gap-2 text-sm">
                 <input v-model="form.consent" type="checkbox" class="mt-1" />
-                <span>Согласен с условиями пользовательского соглашения</span>
+                <span>{{ t('booking.consent') }}</span>
               </label>
               <span v-if="errors.consent" class="text-sm text-red-700">{{ errors.consent }}</span>
             </div>
@@ -247,17 +251,17 @@ onBeforeUnmount(() => {
             <div class="leading-tight">
               <template v-if="nights > 0">
                 <p class="text-xl font-medium">{{ formatPrice(total) }}</p>
-                <p class="text-sm text-muted">{{ pluralNights(nights) }} × {{ formatPrice(apartment.price) }} · оплата при заселении</p>
+                <p class="text-sm text-muted">{{ t('booking.total', { nights: nightsText(nights), price: formatPrice(apartment.price) }) }}</p>
               </template>
               <template v-else>
                 <p class="text-xl font-medium">{{ formatPrice(apartment.price) }}</p>
-                <p class="text-sm text-muted">за сутки · выберите даты</p>
+                <p class="text-sm text-muted">{{ t('booking.pickDates') }}</p>
               </template>
             </div>
             <div class="flex gap-2">
-              <button type="button" class="btn-secondary hidden sm:inline-flex" @click="close">Отмена</button>
+              <button type="button" class="btn-secondary hidden sm:inline-flex" @click="close">{{ t('booking.cancel') }}</button>
               <button type="submit" class="btn-primary flex-1 sm:flex-none" :disabled="status === 'sending'">
-                {{ status === 'sending' ? 'Отправляем…' : 'Забронировать' }}
+                {{ status === 'sending' ? t('booking.sending') : t('common.book') }}
               </button>
             </div>
           </div>

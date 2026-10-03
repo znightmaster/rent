@@ -2,7 +2,23 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/image'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/image', '@nuxtjs/i18n'],
+
+  // Языки: русский — по старым адресам (/apartments), остальные — с префиксом (/en/apartments, /kk/apartments).
+  // Тексты — в i18n/locales/*.json
+  i18n: {
+    // Адрес сайта для hreflang-ссылок (поисковикам). TODO: заменить, когда появится свой домен.
+    baseUrl: 'https://rent-seven-ruddy.vercel.app',
+    defaultLocale: 'ru',
+    strategy: 'prefix_except_default',
+    locales: [
+      { code: 'ru', language: 'ru-RU', name: 'Русский', file: 'ru.json' },
+      { code: 'en', language: 'en-US', name: 'English', file: 'en.json' },
+      { code: 'kk', language: 'kk-KZ', name: 'Қазақша', file: 'kk.json' },
+    ],
+    detectBrowserLanguage: false,
+    vueI18n: './i18n.config.ts',
+  },
   css: ['~/assets/css/main.css'],
 
   // Компоненты из подпапок доступны по короткому имени: <ApartmentCard />, а не <UiApartmentCard />
@@ -10,7 +26,6 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      htmlAttrs: { lang: 'ru' },
       titleTemplate: '%s — GoodHome',
       title: 'Гостевые квартиры в Павлодаре',
       meta: [

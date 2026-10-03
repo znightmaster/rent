@@ -11,4 +11,10 @@ export const site = {
   instagram: 'https://www.instagram.com/goodhome.pvl/',
   // TODO: заменить на ссылку на вашу страницу на Booking.com
   booking: 'https://www.booking.com/index.ru.html',
+  // Цифры доверия под первым экраном главной. Пустое значение — пункт не показывается.
+  stats: {
+    rating: 9.5, // средняя оценка на Booking
+    guests: undefined as number | undefined, // TODO: сколько гостей уже останавливалось, например 1500 → «1 500+»
+    since: undefined as number | undefined, // TODO: год начала работы, например 2019 → «7 лет»
+  },
 } as const

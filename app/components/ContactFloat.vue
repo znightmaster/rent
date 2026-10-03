@@ -25,7 +25,7 @@ onBeforeUnmount(() => observer?.disconnect())
       :href="site.whatsapp"
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Написать в WhatsApp"
+      :aria-label="$t('common.writeWhatsapp')"
       :tabindex="hidden ? -1 : undefined"
       class="flex h-12 w-12 items-center justify-center rounded-full border border-line bg-white text-brand shadow-[0_10px_30px_-12px_rgba(36,52,59,0.5)] transition duration-300 hover:scale-110 hover:text-[#25D366] focus-visible:text-[#25D366]"
     >
@@ -35,7 +35,7 @@ onBeforeUnmount(() => observer?.disconnect())
       :href="site.telegram"
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Написать в Telegram"
+      :aria-label="$t('common.writeTelegram')"
       :tabindex="hidden ? -1 : undefined"
       class="flex h-14 w-14 items-center justify-center rounded-full border border-line bg-white text-brand shadow-[0_10px_30px_-12px_rgba(36,52,59,0.5)] transition duration-300 hover:scale-110 hover:text-[#229ED9] focus-visible:text-[#229ED9]"
     >

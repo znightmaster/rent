@@ -1,5 +1,6 @@
 <script setup lang="ts">
-defineProps<{ tags: string[] }>()
+// label — как показать тег (перевод); значение фильтра остаётся исходным
+defineProps<{ tags: string[]; label?: (tag: string) => string }>()
 const model = defineModel<string[]>({ required: true })
 
 function toggle(tag: string) {
@@ -20,7 +21,7 @@ function toggle(tag: string) {
       "
       @click="toggle(tag)"
     >
-      {{ tag }}
+      {{ label ? label(tag) : tag }}
     </button>
   </div>
 </template>

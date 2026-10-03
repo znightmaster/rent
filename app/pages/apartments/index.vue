@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { Apartment, SearchValue } from '#shared/types'
 
+const { t } = useI18n()
+const amenityLabel = useAmenityLabel()
+
 useSeoMeta({
-  title: 'Квартиры',
-  description: 'Дизайнерские гостевые квартиры в Павлодаре: выбирайте по датам, цене и удобствам.',
+  title: () => t('apartments.seoTitle'),
+  description: () => t('apartments.seoDescription'),
 })
 
 const route = useRoute()
@@ -31,7 +34,7 @@ const { data, status, error, refresh } = await useFetch<Apartment[]>('/api/apart
 function applySearch() {
   const { from, to } = form.value
   if (Boolean(from) !== Boolean(to)) {
-    searchHint.value = 'Укажите обе даты — заезд и выезд — или очистите их.'
+    searchHint.value = t('search.bothDates')
     return
   }
   searchHint.value = ''
@@ -82,26 +85,13 @@ function resetFilters() {
   tags.value = []
 }
 
-// «4 квартиры», «1 квартира», «5 квартир»
-function plural(n: number, one: string, few: string, many: string) {
-  const m10 = n % 10
-  const m100 = n % 100
-  if (m10 === 1 && m100 !== 11) return one
-  if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few
-  return many
-}
-const foundText = computed(() => {
-  const n = filtered.value.length
-  return `${plural(n, 'Найдена', 'Найдено', 'Найдено')} ${n} ${plural(n, 'квартира', 'квартиры', 'квартир')}`
-})
-
 const preset = computed(() => ({ from: applied.value.from, to: applied.value.to, guests: applied.value.guests }))
 </script>
 
 <template>
   <div class="container-page py-6 lg:py-10">
-    <h1 class="text-4xl lg:text-6xl">Квартиры</h1>
-    <p class="mt-4 max-w-md text-lg text-muted">Дизайнерские квартиры в новых домах Павлодара. Укажите даты — покажем свободные.</p>
+    <h1 class="text-4xl lg:text-6xl">{{ t('apartments.title') }}</h1>
+    <p class="mt-4 max-w-md text-lg text-muted">{{ t('apartments.lead') }}</p>
 
     <div class="mt-8 max-w-3xl">
       <ReservationBar v-model="form" @search="applySearch" />
@@ -111,7 +101,7 @@ const preset = computed(() => ({ from: applied.value.from, to: applied.value.to,
     <!-- Панель: количество, фильтры, сортировка -->
     <div class="mt-12 flex flex-wrap items-center justify-between gap-3">
       <p class="text-xl" aria-live="polite">
-        <template v-if="status !== 'pending'">{{ foundText }}</template>
+        <template v-if="status !== 'pending'">{{ t('apartments.found', filtered.length) }}</template>
       </p>
       <div class="flex items-center gap-2">
         <button
@@ -127,12 +117,12 @@ const preset = computed(() => ({ from: applied.value.from, to: applied.value.to,
             <circle cx="16" cy="7" r="2" />
             <circle cx="10" cy="17" r="2" />
           </svg>
-          Фильтры<span v-if="activeFilters" class="ml-2 rounded-full bg-rose-dark px-2 text-sm text-white">{{ activeFilters }}</span>
+          {{ t('apartments.filters') }}<span v-if="activeFilters" class="ml-2 rounded-full bg-rose-dark px-2 text-sm text-white">{{ activeFilters }}</span>
         </button>
-        <label class="sr-only" for="sort">Сортировка</label>
+        <label class="sr-only" for="sort">{{ t('apartments.sort') }}</label>
         <select id="sort" v-model="sort" class="field !w-auto !min-h-[2.75rem] !rounded-full !border-rose/50 !py-2">
-          <option value="asc">Сначала дешевле</option>
-          <option value="desc">Сначала дороже</option>
+          <option value="asc">{{ t('apartments.sortAsc') }}</option>
+          <option value="desc">{{ t('apartments.sortDesc') }}</option>
         </select>
       </div>
     </div>
@@ -145,7 +135,7 @@ const preset = computed(() => ({ from: applied.value.from, to: applied.value.to,
         class="mt-4 grid gap-8 rounded-3xl border border-line bg-white p-6 md:grid-cols-2 md:gap-12 lg:p-8"
       >
         <div v-if="bounds.max > bounds.min" class="flex flex-col gap-3">
-          <p class="font-medium">Цена за сутки</p>
+          <p class="font-medium">{{ t('apartments.priceTitle') }}</p>
           <PriceRange
             :model-value="effectiveRange"
             :min="bounds.min"
@@ -154,10 +144,10 @@ const preset = computed(() => ({ from: applied.value.from, to: applied.value.to,
           />
         </div>
         <div v-if="allTags.length" class="flex flex-col gap-3">
-          <p class="font-medium">Удобства</p>
-          <TagFilter v-model="tags" :tags="allTags" />
+          <p class="font-medium">{{ t('apartments.amenitiesTitle') }}</p>
+          <TagFilter v-model="tags" :tags="allTags" :label="amenityLabel" />
         </div>
-        <button v-if="activeFilters" type="button" class="text-link w-fit md:col-span-2" @click="resetFilters">Сбросить фильтры</button>
+        <button v-if="activeFilters" type="button" class="text-link w-fit md:col-span-2" @click="resetFilters">{{ t('apartments.reset') }}</button>
       </div>
     </Transition>
 
@@ -171,17 +161,17 @@ const preset = computed(() => ({ from: applied.value.from, to: applied.value.to,
 
     <!-- Ошибка -->
     <div v-else-if="error" class="mt-8 flex flex-col items-start gap-4 rounded-3xl bg-mist p-8" role="alert">
-      <p class="text-xl">Не удалось загрузить квартиры.</p>
-      <button type="button" class="btn-primary" @click="refresh()">Повторить</button>
+      <p class="text-xl">{{ t('apartments.loadError') }}</p>
+      <button type="button" class="btn-primary" @click="refresh()">{{ t('apartments.retry') }}</button>
     </div>
 
     <!-- Пусто -->
     <div v-else-if="!filtered.length" class="mt-8 flex flex-col items-start gap-4 rounded-3xl bg-rose-soft p-8 lg:p-10">
-      <p class="text-2xl">Свободных квартир не нашлось</p>
-      <p class="max-w-md text-muted">Попробуйте другие даты, меньше гостей или сбросьте фильтры. А можно просто написать нам — подскажем.</p>
+      <p class="text-2xl">{{ t('apartments.emptyTitle') }}</p>
+      <p class="max-w-md text-muted">{{ t('apartments.emptyText') }}</p>
       <div class="flex flex-wrap gap-3">
-        <button v-if="activeFilters" type="button" class="btn-secondary" @click="resetFilters">Сбросить фильтры</button>
-        <a :href="site.telegram" target="_blank" rel="noopener noreferrer" class="btn-primary">Написать в Telegram</a>
+        <button v-if="activeFilters" type="button" class="btn-secondary" @click="resetFilters">{{ t('apartments.reset') }}</button>
+        <a :href="site.telegram" target="_blank" rel="noopener noreferrer" class="btn-primary">{{ t('common.writeTelegram') }}</a>
       </div>
     </div>
 

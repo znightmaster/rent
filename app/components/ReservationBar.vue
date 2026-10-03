@@ -40,24 +40,24 @@ const guests = computed({
     @submit.prevent="emit('search')"
   >
     <label class="flex flex-col gap-0.5 bg-white px-5 py-3 transition focus-within:bg-rose-soft/60">
-      <span class="text-sm text-muted">Заезд</span>
+      <span class="text-sm text-muted">{{ $t('search.checkIn') }}</span>
       <input v-model="from" type="date" :min="today" class="field-bare" />
     </label>
 
     <label class="flex flex-col gap-0.5 bg-white px-5 py-3 transition focus-within:bg-rose-soft/60">
-      <span class="text-sm text-muted">Выезд</span>
+      <span class="text-sm text-muted">{{ $t('search.checkOut') }}</span>
       <input v-model="to" type="date" :min="minTo" class="field-bare" />
     </label>
 
     <label class="flex flex-col gap-0.5 bg-white px-5 py-3 transition focus-within:bg-rose-soft/60">
-      <span class="text-sm text-muted">Гости</span>
+      <span class="text-sm text-muted">{{ $t('search.guests') }}</span>
       <select v-model="guests" class="field-bare">
         <option v-for="n in guestOptions" :key="n" :value="n">{{ n }}</option>
       </select>
     </label>
 
     <div class="flex items-stretch bg-white p-2">
-      <button type="submit" class="btn-primary w-full lg:px-8">Найти</button>
+      <button type="submit" class="btn-primary w-full lg:px-8">{{ $t('search.find') }}</button>
     </div>
   </form>
 </template>
